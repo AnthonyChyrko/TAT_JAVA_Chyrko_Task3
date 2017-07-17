@@ -1,0 +1,1 @@
+DROP TRIGGER `add_b_quantity`;

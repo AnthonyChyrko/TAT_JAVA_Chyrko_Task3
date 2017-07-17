@@ -1,0 +1,1 @@
+DELETE FROM `genres` WHERE `g_id` > 0

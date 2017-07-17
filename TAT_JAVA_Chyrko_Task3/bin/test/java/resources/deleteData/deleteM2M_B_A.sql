@@ -1,0 +1,1 @@
+TRUNCATE TABLE m2m_books_authors;

@@ -1,0 +1,1 @@
+DELETE FROM `books` WHERE `b_id` > 0

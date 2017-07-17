@@ -1,0 +1,239 @@
+<html>
+<head>
+<title>TestNG:  AutoQALibrary</title>
+<link href="../testng.css" rel="stylesheet" type="text/css" />
+<link href="../my-testng.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+.log { display: none;} 
+.stack-trace { display: none;} 
+</style>
+<script type="text/javascript">
+<!--
+function flip(e) {
+  current = e.style.display;
+  if (current == 'block') {
+    e.style.display = 'none';
+    return 0;
+  }
+  else {
+    e.style.display = 'block';
+    return 1;
+  }
+}
+
+function toggleBox(szDivId, elem, msg1, msg2)
+{
+  var res = -1;  if (document.getElementById) {
+    res = flip(document.getElementById(szDivId));
+  }
+  else if (document.all) {
+    // this is the way old msie versions work
+    res = flip(document.all[szDivId]);
+  }
+  if(elem) {
+    if(res == 0) elem.innerHTML = msg1; else elem.innerHTML = msg2;
+  }
+
+}
+
+function toggleAllBoxes() {
+  if (document.getElementsByTagName) {
+    d = document.getElementsByTagName('div');
+    for (i = 0; i < d.length; i++) {
+      if (d[i].className == 'log') {
+        flip(d[i]);
+      }
+    }
+  }
+}
+
+// -->
+</script>
+
+</head>
+<body>
+<h2 align='center'>AutoQALibrary</h2><table border='1' align="center">
+<tr>
+<td>Tests passed/Failed/Skipped:</td><td>32/0/0</td>
+</tr><tr>
+<td>Started on:</td><td>Mon Jul 17 13:22:23 MSK 2017</td>
+</tr>
+<tr><td>Total time:</td><td>5 seconds (5572 ms)</td>
+</tr><tr>
+<td>Included groups:</td><td></td>
+</tr><tr>
+<td>Excluded groups:</td><td></td>
+</tr>
+</table><p/>
+<small><i>(Hover the method name to see the test class name)</i></small><p/>
+<table width='100%' border='1' class='invocation-passed'>
+<tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='test.java.TstSignOut.EmptyLoginNoUserInSystem()'><b>EmptyLoginNoUserInSystem</b><br>Test class: test.java.TstSignOut<br>Parameters: command=sign_out&login=, No one user in system!</td>
+<td></td>
+<td>0</td>
+<td>test.java.TstSignOut@573f2bb1</td></tr>
+<tr>
+<td title='test.java.TstRegister.EmptyLoginNoUserInSystem()'><b>EmptyLoginNoUserInSystem</b><br>Test class: test.java.TstRegister<br>Parameters: command=registration&login=&password=newPassword, Field login or password can not be empty!</td>
+<td></td>
+<td>0</td>
+<td>test.java.TstRegister@5ae9a829</td></tr>
+<tr>
+<td title='test.java.TstSignOut.EmptyLoginUserInSystem()'><b>EmptyLoginUserInSystem</b><br>Test class: test.java.TstSignOut<br>Parameters: command=sign_out&login=, Only the user can do SingOut!</td>
+<td></td>
+<td>0</td>
+<td>test.java.TstSignOut@573f2bb1</td></tr>
+<tr>
+<td title='test.java.TstRegister.EmptyPasswordNoUserInSystem()'><b>EmptyPasswordNoUserInSystem</b><br>Test class: test.java.TstRegister<br>Parameters: command=registration&login=NewPerson&password=, Field login or password can not be empty!</td>
+<td></td>
+<td>0</td>
+<td>test.java.TstRegister@5ae9a829</td></tr>
+<tr>
+<td title='test.java.TstSignOut.clearDataUserInSystem()'><b>clearDataUserInSystem</b><br>Test class: test.java.TstSignOut<br>Parameters: command=sign_out&login=Anton, Good Bye!</td>
+<td></td>
+<td>0</td>
+<td>test.java.TstSignOut@573f2bb1</td></tr>
+<tr>
+<td title='test.java.TstRegister.corLogCorPassUserIn()'><b>corLogCorPassUserIn</b><br>Test class: test.java.TstRegister<br>Parameters: command=registration&login=correctLogin&password=corPass123, Someone from the user already in the system!</td>
+<td></td>
+<td>0</td>
+<td>test.java.TstRegister@5ae9a829</td></tr>
+<tr>
+<td title='test.java.TstRegister.corLogCorPassUserOut()'><b>corLogCorPassUserOut</b><br>Test class: test.java.TstRegister<br>Parameters: command=registration&login=correctLogin&password=corPass123, New USER registered!</td>
+<td></td>
+<td>0</td>
+<td>test.java.TstRegister@5ae9a829</td></tr>
+<tr>
+<td title='test.java.TstBanUser.corLogCorSignInUserInAccessABanExistedUser()'><b>corLogCorSignInUserInAccessABanExistedUser</b><br>Test class: test.java.TstBanUser<br>Parameters: command=ban_user&login=Petr&signIn=BAN, Profile is changed!</td>
+<td></td>
+<td>0</td>
+<td>test.java.TstBanUser@6d8a00e3</td></tr>
+<tr>
+<td title='test.java.TstBanUser.corLogCorSignInUserInAccessABanExistedUserAlreadyBAN()'><b>corLogCorSignInUserInAccessABanExistedUserAlreadyBAN</b><br>Test class: test.java.TstBanUser<br>Parameters: command=ban_user&login=Petr&signIn=BAN, User already BAN!</td>
+<td></td>
+<td>0</td>
+<td>test.java.TstBanUser@6d8a00e3</td></tr>
+<tr>
+<td title='test.java.TstBanUser.corLogCorSignInUserInAccessABanNoExistedUser()'><b>corLogCorSignInUserInAccessABanNoExistedUser</b><br>Test class: test.java.TstBanUser<br>Parameters: command=ban_user&login=NoSuchUser&signIn=BAN, User is absent in db! Please registration!</td>
+<td></td>
+<td>0</td>
+<td>test.java.TstBanUser@6d8a00e3</td></tr>
+<tr>
+<td title='test.java.TstBanUser.corLogCorSignInUserInAccessABanSA()'><b>corLogCorSignInUserInAccessABanSA</b><br>Test class: test.java.TstBanUser<br>Parameters: command=ban_user&login=Anton&signIn=BAN, You can not block superadmin!</td>
+<td></td>
+<td>0</td>
+<td>test.java.TstBanUser@6d8a00e3</td></tr>
+<tr>
+<td title='test.java.TstBanUser.corLogCorSignInUserInAccessSABanExistedUser()'><b>corLogCorSignInUserInAccessSABanExistedUser</b><br>Test class: test.java.TstBanUser<br>Parameters: command=ban_user&login=Sema&signIn=BAN, Profile is changed!</td>
+<td></td>
+<td>0</td>
+<td>test.java.TstBanUser@6d8a00e3</td></tr>
+<tr>
+<td title='test.java.TstBanUser.corLogCorSignInUserInAccessSABanYourself()'><b>corLogCorSignInUserInAccessSABanYourself</b><br>Test class: test.java.TstBanUser<br>Parameters: command=ban_user&login=Anton&signIn=BAN, You can not ban yourself!</td>
+<td></td>
+<td>0</td>
+<td>test.java.TstBanUser@6d8a00e3</td></tr>
+<tr>
+<td title='test.java.TstBanUser.corLogCorSignInUserInAccessU()'><b>corLogCorSignInUserInAccessU</b><br>Test class: test.java.TstBanUser<br>Parameters: command=ban_user&login=Anton&signIn=BAN, You do not have permission to BLOCK/UNLOCK user!</td>
+<td></td>
+<td>0</td>
+<td>test.java.TstBanUser@6d8a00e3</td></tr>
+<tr>
+<td title='test.java.TstBanUser.corLogCorSignInUserInAccessUBan()'><b>corLogCorSignInUserInAccessUBan</b><br>Test class: test.java.TstBanUser<br>Parameters: command=ban_user&login=Anton&signIn=BAN, You do not have permission to BLOCK/UNLOCK user!</td>
+<td></td>
+<td>0</td>
+<td>test.java.TstBanUser@6d8a00e3</td></tr>
+<tr>
+<td title='test.java.TstBanUser.corLogCorSignInUserOut()'><b>corLogCorSignInUserOut</b><br>Test class: test.java.TstBanUser<br>Parameters: command=ban_user&login=Anton&signIn=BAN, You must be registered or SignIn!</td>
+<td></td>
+<td>0</td>
+<td>test.java.TstBanUser@6d8a00e3</td></tr>
+<tr>
+<td title='test.java.TstRegister.corLogIncorPassUserIn()'><b>corLogIncorPassUserIn</b><br>Test class: test.java.TstRegister<br>Parameters: command=registration&login=correctLogin&password=incorPass, Someone from the user already in the system!</td>
+<td></td>
+<td>0</td>
+<td>test.java.TstRegister@5ae9a829</td></tr>
+<tr>
+<td title='test.java.TstRegister.corLogIncorPassUserOut()'><b>corLogIncorPassUserOut</b><br>Test class: test.java.TstRegister<br>Parameters: command=registration&login=correctLogin&password=incorPass, Incorrect PASSWORD!</td>
+<td></td>
+<td>0</td>
+<td>test.java.TstRegister@5ae9a829</td></tr>
+<tr>
+<td title='test.java.TstBanUser.corLogIncorSignInUserIn()'><b>corLogIncorSignInUserIn</b><br>Test class: test.java.TstBanUser<br>Parameters: command=ban_user&login=Anton&signIn=BANT, You can not change a parameter to this value!</td>
+<td></td>
+<td>0</td>
+<td>test.java.TstBanUser@6d8a00e3</td></tr>
+<tr>
+<td title='test.java.TstRegister.incorLogCorPassUserIn()'><b>incorLogCorPassUserIn</b><br>Test class: test.java.TstRegister<br>Parameters: command=registration&login=InccorrectLogin!&password=corPass123, Someone from the user already in the system!</td>
+<td></td>
+<td>0</td>
+<td>test.java.TstRegister@5ae9a829</td></tr>
+<tr>
+<td title='test.java.TstRegister.incorLogCorPassUserOut()'><b>incorLogCorPassUserOut</b><br>Test class: test.java.TstRegister<br>Parameters: command=registration&login=InccorrectLogin!&password=corPass123, Incorrect LOGIN!</td>
+<td></td>
+<td>0</td>
+<td>test.java.TstRegister@5ae9a829</td></tr>
+<tr>
+<td title='test.java.TstRegister.incorLogIncorPassUserIn()'><b>incorLogIncorPassUserIn</b><br>Test class: test.java.TstRegister<br>Parameters: command=registration&login=IncPers&password=incorrectPassword, Someone from the user already in the system!</td>
+<td></td>
+<td>0</td>
+<td>test.java.TstRegister@5ae9a829</td></tr>
+<tr>
+<td title='test.java.TstRegister.incorLogIncorPassUserOut()'><b>incorLogIncorPassUserOut</b><br>Test class: test.java.TstRegister<br>Parameters: command=registration&login=InccorrectLogin!&password=incorrectPassword, Incorrect LOGIN!</td>
+<td></td>
+<td>0</td>
+<td>test.java.TstRegister@5ae9a829</td></tr>
+<tr>
+<td title='test.java.TstSignOut.noUserInSystem()'><b>noUserInSystem</b><br>Test class: test.java.TstSignOut<br>Parameters: command=sign_out&login=Anton, No one user in system!</td>
+<td></td>
+<td>0</td>
+<td>test.java.TstSignOut@573f2bb1</td></tr>
+<tr>
+<td title='test.java.TstRegister.suchLoginAlreadyExistNoUserInSystem()'><b>suchLoginAlreadyExistNoUserInSystem</b><br>Test class: test.java.TstRegister<br>Parameters: command=registration&login=Anton&password=newPassword123, User with such login already exists! Think up another login!</td>
+<td></td>
+<td>0</td>
+<td>test.java.TstRegister@5ae9a829</td></tr>
+<tr>
+<td title='test.java.TstSignOut.userAlreadySignOut()'><b>userAlreadySignOut</b><br>Test class: test.java.TstSignOut<br>Parameters: command=sign_out&login=Anton, User already SignOut!</td>
+<td></td>
+<td>0</td>
+<td>test.java.TstSignOut@573f2bb1</td></tr>
+<tr>
+<td title='test.java.TstSignOut.userExistButAlreadyOUT()'><b>userExistButAlreadyOUT</b><br>Test class: test.java.TstSignOut<br>Parameters: command=sign_out&login=Anton, You must be SignIn!</td>
+<td></td>
+<td>0</td>
+<td>test.java.TstSignOut@573f2bb1</td></tr>
+<tr>
+<td title='test.java.TstSignIn.userExistButIncorrectLogin()'><b>userExistButIncorrectLogin</b><br>Test class: test.java.TstSignIn<br>Parameters: command=sign_in&login=WrongLogin&password=password4, Such a user does not exist yet! You can register!</td>
+<td></td>
+<td>0</td>
+<td>test.java.TstSignIn@402f32ff</td></tr>
+<tr>
+<td title='test.java.TstSignIn.userExistButIncorrectPassword()'><b>userExistButIncorrectPassword</b><br>Test class: test.java.TstSignIn<br>Parameters: command=sign_in&login=Anton&password=wrongPassword, Wrong login or password!</td>
+<td></td>
+<td>0</td>
+<td>test.java.TstSignIn@402f32ff</td></tr>
+<tr>
+<td title='test.java.TstSignIn.userExistCorrectData()'><b>userExistCorrectData</b><br>Test class: test.java.TstSignIn<br>Parameters: command=sign_in&login=Anton&password=passWord4, Welcom!</td>
+<td></td>
+<td>0</td>
+<td>test.java.TstSignIn@402f32ff</td></tr>
+<tr>
+<td title='test.java.TstSignIn.userExistEmptyString()'><b>userExistEmptyString</b><br>Test class: test.java.TstSignIn<br>Parameters: command=sign_in&login=&password=, Incorrect login or password</td>
+<td></td>
+<td>0</td>
+<td>test.java.TstSignIn@402f32ff</td></tr>
+<tr>
+<td title='test.java.TstSignIn.userIsNotExist()'><b>userIsNotExist</b><br>Test class: test.java.TstSignIn<br>Parameters: command=sign_in&login=NoSuchUser&password=fictionalPassword, Such a user does not exist yet! You can register!</td>
+<td></td>
+<td>0</td>
+<td>test.java.TstSignIn@402f32ff</td></tr>
+</table><p>
+</body>
+</html>

@@ -1,0 +1,1 @@
+DROP TRIGGER `subtract_b_quantity`;
