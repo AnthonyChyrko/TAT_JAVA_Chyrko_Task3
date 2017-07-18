@@ -9,14 +9,15 @@ public class User implements Serializable {
 	 */
 	private static final long serialVersionUID = 6171241758074046515L;
 
-	private static User instance;
+//	private static User instance;
 	
 	private long userId;
 	private String login;
 	private String password;
 	private String signIn;
 	private String access;
-//	private enum status {N,U,A,SA};
+	private Role role;
+	public enum Role {USER,ADMIN,SUPERADMIN};
 //	private String name;
 //	private String surname;
 	
@@ -42,12 +43,26 @@ public class User implements Serializable {
 		this.access = access;
 	}	
 	
-	public static User getInstance(){
-		if(instance == null){
-			instance = new User();
+	public Role getRole() {
+		return role;
+	}
+	
+	public void setRole(String roleStr) {
+		if (roleStr != null) {
+			for (Role role : Role.values()) {
+				if (role.name().equals(roleStr)) {
+					this.role = Role.valueOf(roleStr);
+					break;
+				}
+			}
 		}
-		return instance;
-	}	
+	}
+//	public static User getInstance(){
+//		if(instance == null){
+//			instance = new User();
+//		}
+//		return instance;
+//	}	
 	
 	public void nullifyUser(){
 		this.userId = 0;

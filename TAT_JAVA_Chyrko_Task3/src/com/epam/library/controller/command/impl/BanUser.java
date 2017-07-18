@@ -25,7 +25,7 @@ public class BanUser implements Command {
 		try {			
 			clientService.banUser(login, signIn);			
 			response = "Profile is changed!";
-			logger.info(response);
+//			logger.info(response);
 		} catch (ServiceException e) {
 			response = e.getMessage();
 			logger.error(e.getMessage());

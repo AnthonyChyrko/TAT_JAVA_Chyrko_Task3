@@ -13,7 +13,6 @@ import com.epam.library.service.factory.ServiceFactory;
 public class EditLogin implements Command {
 	private final static Logger logger = Logger.getLogger(EditLogin.class);
 	UtilController uc = new UtilController();	
-	User user = User.getInstance();
 	
 	@Override
 	public String execute(String request) {
@@ -27,7 +26,7 @@ public class EditLogin implements Command {
 		try {			
 			clientService.editLogin(login);			
 			response = "Login is changed!";
-			logger.info(response);
+//			logger.info(response);
 		} catch (ServiceException e) {
 			response = e.getMessage();
 			logger.error(e.getMessage());

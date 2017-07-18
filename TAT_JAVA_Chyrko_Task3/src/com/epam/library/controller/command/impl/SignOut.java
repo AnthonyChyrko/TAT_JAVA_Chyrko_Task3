@@ -24,7 +24,7 @@ public class SignOut implements Command {
 		try {	
 			clientService.signOut(login);
 			response = "Good Bye!";
-			logger.info(response);
+//			logger.info(response);
 		} catch (ServiceException e) {
 			response = e.getMessage();
 		}

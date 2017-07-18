@@ -22,11 +22,12 @@ import com.epam.library.controller.command.impl.ShowAllBooks;
 import com.epam.library.controller.command.impl.SignIn;
 import com.epam.library.controller.command.impl.SignOut;
 import com.epam.library.controller.command.impl.WrongRequest;
+import com.epam.library.controller.session.SessionStorage;
 
 public class CommandProvider {
 	private final static Logger logger = Logger.getLogger(CommandProvider.class);
 	private final Map<CommandName, Command> repository = new HashMap<>();
-	
+	SessionStorage session = null;
 	CommandProvider() {
 		repository.put(CommandName.SIGN_IN, new SignIn());
 		repository.put(CommandName.SIGN_OUT, new SignOut());
@@ -52,8 +53,11 @@ public class CommandProvider {
 		CommandName commandName = null;
 		Command command = null;
 		try{
-			commandName = CommandName.valueOf(name.toUpperCase());			
-			command = repository.get(commandName);
+			commandName = CommandName.valueOf(name.toUpperCase());	
+//			session = SessionStorage.getInstance();			
+//				System.out.println(session.getUserFromSession(Thread.currentThread().hashCode()).toString()+" !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+				command = repository.get(commandName);
+			
 			logger.info(""+commandName);
 		}catch (IllegalArgumentException | NullPointerException e) {
 			

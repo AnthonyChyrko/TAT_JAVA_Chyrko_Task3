@@ -13,7 +13,6 @@ import com.epam.library.service.factory.ServiceFactory;
 public class EditPassword implements Command {
 	private final static Logger logger = Logger.getLogger(EditPassword.class);
 	UtilController uc = new UtilController();	
-	User user = User.getInstance();
 	
 	@Override
 	public String execute(String request) {

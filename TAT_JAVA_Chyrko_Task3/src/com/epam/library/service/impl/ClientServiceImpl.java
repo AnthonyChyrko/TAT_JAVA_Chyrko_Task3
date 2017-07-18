@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import com.epam.library.bean.User;
 import com.epam.library.constant.RegExp;
+import com.epam.library.controller.session.SessionStorage;
 import com.epam.library.dao.UserDAO;
 import com.epam.library.dao.exception.DAOException;
 import com.epam.library.dao.factory.DAOFactory;
@@ -15,7 +16,8 @@ import com.epam.library.service.exception.ServiceException;
 
 public class ClientServiceImpl implements ClientService {
 	private final static Logger logger = Logger.getLogger(ClientServiceImpl.class);
-	User user = User.getInstance();
+	SessionStorage session = SessionStorage.getInstance();
+//	User user = User.getInstance();
 
 	private boolean checkLogin(String login){
 		boolean result = false;
@@ -56,8 +58,9 @@ public class ClientServiceImpl implements ClientService {
 
 	@Override
 	public void signOut(String login) throws ServiceException{
+		User user = session.getUserFromSession(Thread.currentThread().hashCode());
 		try {
-			logger.info(user.toString());
+//			logger.info(user.toString());
 			if(user.getLogin()==null && user.getLogin().isEmpty()){
 				logger.warn("There is no user in the system!");
 				throw new ServiceException("There is no user in the system!");
@@ -84,6 +87,7 @@ public class ClientServiceImpl implements ClientService {
 
 	@Override
 	public void registration(String login, String password) throws ServiceException {
+		User user = session.getUserFromSession(Thread.currentThread().hashCode());
 		if(user.getSignIn() != null){
 			logger.warn("Someone from the user already in the system!");
 			throw new ServiceException("Someone from the user already in the system!");
@@ -116,7 +120,7 @@ public class ClientServiceImpl implements ClientService {
 
 	@Override
 	public void editLogin(String login) throws ServiceException {
-		
+		User user = session.getUserFromSession(Thread.currentThread().hashCode());
 		if(user.getLogin() == null || user.getLogin().isEmpty()
 				|| user.getPassword() == null || user.getPassword().isEmpty()
 						|| user.getAccess() == null || user.getAccess().isEmpty()
@@ -161,7 +165,7 @@ public class ClientServiceImpl implements ClientService {
 
 	@Override
 	public void banUser(String targetlogin, String signIn) throws ServiceException {
-		
+		User user = session.getUserFromSession(Thread.currentThread().hashCode());
 		if(user.getLogin() == null || user.getLogin().isEmpty()
 				|| user.getPassword() == null || user.getPassword().isEmpty()
 						|| user.getAccess() == null || user.getAccess().isEmpty()

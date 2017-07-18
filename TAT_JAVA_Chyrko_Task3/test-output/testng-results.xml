@@ -2,32 +2,16 @@
 <testng-results skipped="0" failed="1" ignored="0" total="2" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="2471" started-at="2017-07-18T08:23:22Z" finished-at="2017-07-18T08:23:24Z">
+  <suite name="Default suite" duration-ms="2208" started-at="2017-07-18T12:37:01Z" finished-at="2017-07-18T12:37:03Z">
     <groups>
     </groups>
-    <test name="scenario1" duration-ms="2471" started-at="2017-07-18T08:23:22Z" finished-at="2017-07-18T08:23:24Z">
+    <test name="scenario1" duration-ms="2208" started-at="2017-07-18T12:37:01Z" finished-at="2017-07-18T12:37:03Z">
       <class name="test.java.TstMultithreadServer">
-        <test-method status="PASS" signature="beforeTest()[pri:0, instance:test.java.TstMultithreadServer@5f341870]" name="beforeTest" is-config="true" duration-ms="1254" started-at="2017-07-18T11:23:22Z" finished-at="2017-07-18T11:23:23Z">
+        <test-method status="PASS" signature="beforeTest()[pri:0, instance:test.java.TstMultithreadServer@5f341870]" name="beforeTest" is-config="true" duration-ms="1137" started-at="2017-07-18T15:37:01Z" finished-at="2017-07-18T15:37:02Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeTest -->
-        <test-method status="PASS" signature="scenario2(java.util.List, java.util.List)[pri:0, instance:test.java.TstMultithreadServer@5f341870]" name="scenario2" duration-ms="275" started-at="2017-07-18T11:23:23Z" data-provider="scenario2" finished-at="2017-07-18T11:23:23Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[command=sign_in&login=Ivan&password=passWord1, command=edit_Login&login=IvanStoGram, command=sign_out&login=IvanStoGram]]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[[Welcom!, Login is changed!, Good Bye!]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- scenario2 -->
-        <test-method status="FAIL" signature="scenario1(java.util.List, java.util.List)[pri:0, instance:test.java.TstMultithreadServer@5f341870]" name="scenario1" duration-ms="189" started-at="2017-07-18T11:23:23Z" data-provider="scenario1" finished-at="2017-07-18T11:23:23Z">
+        <test-method status="FAIL" signature="scenario1(java.util.List, java.util.List)[pri:0, instance:test.java.TstMultithreadServer@5f341870]" name="scenario1" duration-ms="197" started-at="2017-07-18T15:37:02Z" data-provider="scenario1" finished-at="2017-07-18T15:37:02Z">
           <params>
             <param index="0">
               <value>
@@ -42,10 +26,10 @@
           </params>
           <exception class="java.lang.AssertionError">
             <message>
-              <![CDATA[expected [Welcom!] but found [SQLException!]]]>
+              <![CDATA[expected [Welcom!] but found [User already SignIn!]]]>
             </message>
             <full-stacktrace>
-              <![CDATA[java.lang.AssertionError: expected [Welcom!] but found [SQLException!]
+              <![CDATA[java.lang.AssertionError: expected [Welcom!] but found [User already SignIn!]
 	at org.testng.Assert.fail(Assert.java:93)
 	at org.testng.Assert.failNotEquals(Assert.java:512)
 	at org.testng.Assert.assertEqualsImpl(Assert.java:134)
@@ -72,7 +56,23 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- scenario1 -->
-        <test-method status="PASS" signature="afterTest()[pri:0, instance:test.java.TstMultithreadServer@5f341870]" name="afterTest" is-config="true" duration-ms="904" started-at="2017-07-18T11:23:23Z" finished-at="2017-07-18T11:23:24Z">
+        <test-method status="PASS" signature="scenario2(java.util.List, java.util.List)[pri:0, instance:test.java.TstMultithreadServer@5f341870]" name="scenario2" duration-ms="181" started-at="2017-07-18T15:37:02Z" data-provider="scenario2" finished-at="2017-07-18T15:37:02Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[command=sign_in&login=Ivan&password=passWord1, command=edit_Login&login=IvanStoGram, command=sign_out&login=IvanStoGram]]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[[Welcom!, Login is changed!, Good Bye!]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- scenario2 -->
+        <test-method status="PASS" signature="afterTest()[pri:0, instance:test.java.TstMultithreadServer@5f341870]" name="afterTest" is-config="true" duration-ms="839" started-at="2017-07-18T15:37:02Z" finished-at="2017-07-18T15:37:03Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- afterTest -->

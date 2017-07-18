@@ -1,5 +1,6 @@
 package com.epam.library.dao.impl;
 
+import java.nio.channels.SeekableByteChannel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,6 +13,7 @@ import org.apache.log4j.Logger;
 import com.epam.library.bean.Book;
 import com.epam.library.bean.OrderBooksList;
 import com.epam.library.bean.User;
+import com.epam.library.controller.session.SessionStorage;
 import com.epam.library.controller.utils.OrderBooksListParam;
 import com.epam.library.dao.BookDAO;
 import com.epam.library.dao.exception.DAOException;
@@ -49,13 +51,14 @@ public class SQLBookDAO implements BookDAO{
 	ConnectionPool connectionPool;
 	PreparedStatement ps = null;	
 	Connection connection;
-	User user = User.getInstance();
+	SessionStorage session = SessionStorage.getInstance();
+//	User user = User.getInstance();
 	Book book;
 	ResultSet rs;
 
 	@Override
 	public void addBook(Book book) throws DAOException{
-		
+		User user = session.getUserFromSession(Thread.currentThread().hashCode());
 		if(user.getLogin() == null || user.getLogin().isEmpty()
 				|| user.getPassword() == null || user.getPassword().isEmpty()
 						|| user.getAccess() == null || user.getAccess().isEmpty()
@@ -179,6 +182,7 @@ public class SQLBookDAO implements BookDAO{
 
 	@Override
 	public void editBook(Book book) throws DAOException {
+		User user = session.getUserFromSession(Thread.currentThread().hashCode());
 		if(user.getLogin() == null || user.getLogin().isEmpty()
 				|| user.getPassword() == null || user.getPassword().isEmpty()
 						|| user.getAccess() == null || user.getAccess().isEmpty()
@@ -238,6 +242,7 @@ public class SQLBookDAO implements BookDAO{
 
 	@Override
 	public void bookAvailability(long b_id, String availability) throws DAOException {
+		User user = session.getUserFromSession(Thread.currentThread().hashCode());
 		connectionPool = new ConnectionPool();		
 		connection = connectionPool.getConnection();
 		if(!user.getAccess().equals("A")&&!user.getAccess().equals("SA")){
@@ -260,6 +265,7 @@ public class SQLBookDAO implements BookDAO{
 
 	@Override
 	public void editOrderBooksList(OrderBooksList orderBooksList) throws DAOException {
+		User user = session.getUserFromSession(Thread.currentThread().hashCode());
 		connectionPool = new ConnectionPool();		
 		connection = connectionPool.getConnection();		
 		if(OrderBooksListParam.ADD_BOOK.toString().equals(orderBooksList.getActionCommand().toUpperCase())){			
@@ -301,7 +307,7 @@ public class SQLBookDAO implements BookDAO{
 
 	@Override
 	public void addSubscription(OrderBooksList orderBooksList) throws DAOException {
-		ResultSet rs;
+		User user = session.getUserFromSession(Thread.currentThread().hashCode());		
 		System.out.println("\nFROM Subscription\n"+orderBooksList.toString());//TODO
 		if(!user.getAccess().equals("A")&&!user.getAccess().equals("SA")){
 			throw new DAOException("You have no permissions to change book availability!");
@@ -338,6 +344,7 @@ public class SQLBookDAO implements BookDAO{
 
 	@Override
 	public void removeSubscription(long userId, long bookId) throws DAOException {
+		User user = session.getUserFromSession(Thread.currentThread().hashCode());
 		if(!user.getAccess().equals("A")&&!user.getAccess().equals("SA")){
 			throw new DAOException("You have no permissions to change book availability!");
 		}

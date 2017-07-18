@@ -57,9 +57,9 @@ function toggleAllBoxes() {
 <tr>
 <td>Tests passed/Failed/Skipped:</td><td>1/1/0</td>
 </tr><tr>
-<td>Started on:</td><td>Tue Jul 18 11:23:22 MSK 2017</td>
+<td>Started on:</td><td>Tue Jul 18 15:37:01 MSK 2017</td>
 </tr>
-<tr><td>Total time:</td><td>2 seconds (2471 ms)</td>
+<tr><td>Total time:</td><td>2 seconds (2208 ms)</td>
 </tr><tr>
 <td>Included groups:</td><td></td>
 </tr><tr>
@@ -76,7 +76,7 @@ function toggleAllBoxes() {
 </tr>
 <tr>
 <td title='test.java.TstMultithreadServer.scenario1()'><b>scenario1</b><br>Test class: test.java.TstMultithreadServer<br>Parameters: [command=sign_in&login=Anton&password=passWord4, command=ban_user&login=Petr&signIn=BAN, command=edit_access&login=Sema&access=U, command=sign_out&login=Anton], [Welcom!, Profile is changed!, Access is changed!, Good Bye!]</td>
-<td><div><pre>java.lang.AssertionError: expected [Welcom!] but found [SQLException!]
+<td><div><pre>java.lang.AssertionError: expected [Welcom!] but found [User already SignIn!]
 	at org.testng.Assert.fail(Assert.java:93)
 	at org.testng.Assert.failNotEquals(Assert.java:512)
 	at org.testng.Assert.assertEqualsImpl(Assert.java:134)
@@ -97,8 +97,8 @@ function toggleAllBoxes() {
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
 	at java.lang.Thread.run(Thread.java:745)
-</pre></div><a href='#' onClick='toggleBox("stack-trace1023830016", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
-<div class='stack-trace' id='stack-trace1023830016'><pre>java.lang.AssertionError: expected [Welcom!] but found [SQLException!]
+</pre></div><a href='#' onClick='toggleBox("stack-trace1796141471", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1796141471'><pre>java.lang.AssertionError: expected [Welcom!] but found [User already SignIn!]
 	at org.testng.Assert.fail(Assert.java:93)
 	at org.testng.Assert.failNotEquals(Assert.java:512)
 	at org.testng.Assert.assertEqualsImpl(Assert.java:134)

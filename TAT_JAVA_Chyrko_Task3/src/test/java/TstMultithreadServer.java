@@ -34,7 +34,7 @@ public class TstMultithreadServer {
 	Connection connection;
 	StringBuilder sb;	 
 	MultithreadServer multithreadServer = MultithreadServer.getInstance();
-	User user = User.getInstance();
+//	User user = User.getInstance();
     
 	@Test(dataProvider = "scenario1")
 	  public void scenario1(List<String> requestsList, List<String> expectedResponceList) {	

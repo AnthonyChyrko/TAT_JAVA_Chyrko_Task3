@@ -1,22 +1,32 @@
 package com.epam.library.controller.command;
 
+import com.epam.library.bean.User.Role;
+
 public enum CommandName {
-	SIGN_IN,
-	SIGN_OUT,
-	REGISTRATION,
-	ADD_BOOK,
-	EDIT_BOOK,	
-	SHOW_ALL_BOOKS,	
-	EDIT_LOGIN,
-	EDIT_PASSWORD,
-	EDIT_ACCESS,
-	BAN_USER,
-	BOOK_AVAILABILITY,
-	EDIT_ORDER_BOOKS_LIST,
+	SIGN_IN(null),
+	SIGN_OUT(null),
+	REGISTRATION(null),
+	ADD_BOOK(Role.ADMIN),
+	EDIT_BOOK(Role.ADMIN),	
+	SHOW_ALL_BOOKS(null),	
+	EDIT_LOGIN(Role.USER),
+	EDIT_PASSWORD(Role.USER),
+	EDIT_ACCESS(Role.ADMIN),
+	BAN_USER(Role.ADMIN),
+	BOOK_AVAILABILITY(Role.ADMIN),
+	EDIT_ORDER_BOOKS_LIST(Role.USER),	
+	ADD_SUBSCRIPTION(Role.ADMIN),
+	REMOVE_SUBSCRIPTION(Role.ADMIN),	
+	WRONG_REQUEST(null);
 	
-	ADD_SUBSCRIPTION,
-	REMOVE_SUBSCRIPTION,
+	private Role role;
 	
+	public Role getRole(){
+		return this.role;
+	}
 	
-	WRONG_REQUEST
+	private CommandName(Role role){
+		this.role = role;
+	}
+	
 }

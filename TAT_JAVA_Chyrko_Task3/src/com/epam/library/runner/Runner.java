@@ -7,7 +7,7 @@ import com.epam.library.controller.Controller;
 public class Runner {	
 
 	public static void main(String[] args) {
-		User user = User.getInstance();		
+//		User user = User.getInstance();		
 		
 //		user.setUser(login, password, "IN" , "dfsafasfdSA"); //user in system
 //		user.setUser("����", "password2", "IN" , "U"); //user in system
@@ -40,7 +40,7 @@ public class Runner {
 //		System.out.println(contr.executeTask(request2)+"\n--------------------------------------------------------------------------\n");
 //		System.out.println(contr.executeTask(request3)+"\n--------------------------------------------------------------------------\n");
 //		System.out.println(contr.executeTask(request4)+"\n--------------------------------------------------------------------------\n");
-		System.out.println("current user"+user.toString());
+//		System.out.println("current user"+user.toString());
 		
 	}
 }

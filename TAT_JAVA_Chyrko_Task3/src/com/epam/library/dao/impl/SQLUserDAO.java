@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 
 import com.epam.library.bean.OrderBooksList;
 import com.epam.library.bean.User;
+import com.epam.library.controller.session.SessionStorage;
 import com.epam.library.dao.UserDAO;
 import com.epam.library.dao.exception.DAOException;
 import com.epam.library.dao.pool.ConnectionPool;
@@ -30,14 +31,16 @@ public class SQLUserDAO implements UserDAO {
 	PreparedStatement ps = null;	
 	ResultSet rs;
 	Connection connection;
-	User user = User.getInstance();
+//	User user = User.getInstance();
+	SessionStorage session = SessionStorage.getInstance();
 	OrderBooksList orderBooksList = OrderBooksList.getInstance();	
 	
 	@Override
-	public void signIn(String login, String password) throws DAOException{			
+	public synchronized void signIn(String login, String password) throws DAOException{			
 		boolean signIn = false;
 		connectionPool = new ConnectionPool();		
 		connection = connectionPool.getConnection();
+		User user = session.getUserFromSession(Thread.currentThread().hashCode());
 		try {
 			ps = connection.prepareStatement(GET_USERS);
 			rs = ps.executeQuery();
@@ -57,7 +60,7 @@ public class SQLUserDAO implements UserDAO {
 							ps = connection.prepareStatement(GET_USER);							
 							ps.setInt(1, rs.getInt(1));			
 							user = setUserParam(user, ps.executeQuery());
-							
+							System.out.println(Thread.currentThread().hashCode()+" - "+user.toString()+" FROM SIGN_IN");
 						}else{			
 							logger.warn("User already SignIn!");
 							throw new DAOException("User already SignIn!");
@@ -67,8 +70,7 @@ public class SQLUserDAO implements UserDAO {
 						throw new DAOException("Wrong login or password!");						
 					}
 				}
-			}
-			System.out.println(user.toString()+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			}		
 			if(!signIn){
 				user.nullifyUser();
 				logger.warn("Such a user does not exist yet! You can register!");
@@ -96,14 +98,14 @@ public class SQLUserDAO implements UserDAO {
 		
 		connectionPool = new ConnectionPool();		
 		connection = connectionPool.getConnection();		
-		
+		User user = session.getUserFromSession(Thread.currentThread().hashCode());
 		try {
 			ps = connection.prepareStatement(GET_USERS);
 			rs = ps.executeQuery();
 			
 			while(rs.next()){					
 				if(login.equals(rs.getString(2))){
-					System.out.println(login + " - " + rs.getString(2) +" + "+ rs.getString(5));//TODO remove after
+//					System.out.println(login + " - " + rs.getString(2) +" + "+ rs.getString(5));//TODO remove after
 					if("IN".equals(rs.getString(5))){								
 						ps = connection.prepareStatement(SIGN_OUT_USER);
 						ps.setInt(1, rs.getInt(1));
@@ -158,6 +160,7 @@ public class SQLUserDAO implements UserDAO {
 
 	@Override
 	public void editLogin(String login) throws DAOException {
+		User user = session.getUserFromSession(Thread.currentThread().hashCode());
 		connectionPool = new ConnectionPool();		
 		connection = connectionPool.getConnection();		
 		boolean flag = false;
@@ -190,6 +193,7 @@ public class SQLUserDAO implements UserDAO {
 
 	@Override
 	public void editPassword(String password) throws DAOException {
+		User user = session.getUserFromSession(Thread.currentThread().hashCode());
 		connectionPool = new ConnectionPool();		
 		connection = connectionPool.getConnection();
 		
@@ -224,6 +228,7 @@ public class SQLUserDAO implements UserDAO {
 
 	@Override
 	public void editAccess(String targetLogin, String newAccess) throws DAOException {
+		User user = session.getUserFromSession(Thread.currentThread().hashCode());
 		connectionPool = new ConnectionPool();		
 		connection = connectionPool.getConnection();
 		boolean flag = false;

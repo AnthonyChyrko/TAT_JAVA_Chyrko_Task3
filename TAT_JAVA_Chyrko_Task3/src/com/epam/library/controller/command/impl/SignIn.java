@@ -24,7 +24,7 @@ public class SignIn implements Command {
 		try {
 			clientService.signIn(login, password);
 			response = "Welcom!";
-			logger.info(response);
+			logger.info(response+" "+login);
 		} catch (ServiceException e) {
 			logger.error(e.getMessage());
 			response = e.getMessage();
