@@ -2,32 +2,16 @@
 <testng-results skipped="0" failed="0" ignored="0" total="2" passed="2">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="2434" started-at="2017-07-18T12:57:52Z" finished-at="2017-07-18T12:57:54Z">
+  <suite name="Default suite" duration-ms="2272" started-at="2017-07-18T13:47:18Z" finished-at="2017-07-18T13:47:20Z">
     <groups>
     </groups>
-    <test name="scenario1" duration-ms="2434" started-at="2017-07-18T12:57:52Z" finished-at="2017-07-18T12:57:54Z">
+    <test name="scenario1" duration-ms="2272" started-at="2017-07-18T13:47:18Z" finished-at="2017-07-18T13:47:20Z">
       <class name="test.java.TstMultithreadServer">
-        <test-method status="PASS" signature="beforeTest()[pri:0, instance:test.java.TstMultithreadServer@5f341870]" name="beforeTest" is-config="true" duration-ms="998" started-at="2017-07-18T15:57:52Z" finished-at="2017-07-18T15:57:53Z">
+        <test-method status="PASS" signature="beforeTest()[pri:0, instance:test.java.TstMultithreadServer@5f341870]" name="beforeTest" is-config="true" duration-ms="1152" started-at="2017-07-18T16:47:18Z" finished-at="2017-07-18T16:47:19Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeTest -->
-        <test-method status="PASS" signature="scenario2(java.util.List, java.util.List)[pri:0, instance:test.java.TstMultithreadServer@5f341870]" name="scenario2" duration-ms="356" started-at="2017-07-18T15:57:53Z" data-provider="scenario2" finished-at="2017-07-18T15:57:53Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[command=sign_in&login=Ivan&password=passWord1, command=edit_Login&login=IvanStoGram, command=sign_out&login=IvanStoGram]]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[[Welcom!, Login is changed!, Good Bye!]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- scenario2 -->
-        <test-method status="PASS" signature="scenario1(java.util.List, java.util.List)[pri:0, instance:test.java.TstMultithreadServer@5f341870]" name="scenario1" duration-ms="376" started-at="2017-07-18T15:57:53Z" data-provider="scenario1" finished-at="2017-07-18T15:57:53Z">
+        <test-method status="PASS" signature="scenario1(java.util.List, java.util.List)[pri:0, instance:test.java.TstMultithreadServer@5f341870]" name="scenario1" duration-ms="312" started-at="2017-07-18T16:47:19Z" data-provider="scenario1" finished-at="2017-07-18T16:47:19Z">
           <params>
             <param index="0">
               <value>
@@ -43,7 +27,23 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- scenario1 -->
-        <test-method status="PASS" signature="afterTest()[pri:0, instance:test.java.TstMultithreadServer@5f341870]" name="afterTest" is-config="true" duration-ms="1027" started-at="2017-07-18T15:57:53Z" finished-at="2017-07-18T15:57:54Z">
+        <test-method status="PASS" signature="scenario2(java.util.List, java.util.List)[pri:0, instance:test.java.TstMultithreadServer@5f341870]" name="scenario2" duration-ms="266" started-at="2017-07-18T16:47:19Z" data-provider="scenario2" finished-at="2017-07-18T16:47:19Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[command=sign_in&login=Ivan&password=passWord1, command=edit_Login&login=IvanStoGram, command=sign_out&login=IvanStoGram]]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[[Welcom!, Login is changed!, Good Bye!]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- scenario2 -->
+        <test-method status="PASS" signature="afterTest()[pri:0, instance:test.java.TstMultithreadServer@5f341870]" name="afterTest" is-config="true" duration-ms="773" started-at="2017-07-18T16:47:19Z" finished-at="2017-07-18T16:47:20Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- afterTest -->

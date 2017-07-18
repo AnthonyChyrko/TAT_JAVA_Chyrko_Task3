@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commands>
+
+	<command id = "1">
+		<name>AddBook</name>
+		<title>SuperBookFree2</title>
+		<author>Somebody</author>
+		<year>2017</year>
+		<genre>fantastic</genre>
+		<quantity>15</quantity>
+		<availability>Y</availability>			
+	</command>
+	
+	<command id = "2">
+		<name>AddSubscription</name>		
+	</command>
+	
+	<command id = "3" name = "BanUser">
+		<name>BanUser</name>
+		<login>Petr</login>
+		<signIn>BAN</signIn>		
+	</command>
+	
+	<command id = "4">
+		<name>BookAvailability</name>
+		<book_id>4</book_id>
+		<title>SuperBook3</title>
+		<availability>Y</availability>
+		<author>Chyrko</author>
+		<year>2015</year>
+		<quantity>15</quantity>
+		<genre>fantastik</genre>
+	</command>
+	
+	<command id = "5">
+		<name>EditAccess</name>
+		<login>Petr</login>
+		<access>U</access>
+	</command>
+	
+	<command id = "6">
+		<name>EditBook</name>
+		<book_id>4</book_id>
+		<title>SuperBook3</title>
+		<author>Chyrko</author>
+		<genre>fantastik</genre>
+		<quantity>15</quantity>
+	</command>
+	
+	<command id = "7">
+		<name>EditLogin</name>
+		<login>Petr</login>
+	</command>
+	
+	<command id = "8">
+		<name>EditOrderBooksList</name>
+		<actionCommand>Add_book</actionCommand>
+		<b_id>4</b_id>
+	</command>
+	
+	<command id = "9">
+		<name>EditPassword</name>
+		<password>newPassword123</password>
+	</command>
+	
+	<command id = "10">
+		<name>Register</name>
+		<login>Semas</login>
+		<password>newPassword123</password>		
+	</command>
+	
+	<command id = "11">
+		<name>RemoveSubscription</name>
+		<u_id>3</u_id>
+		<b_id>6</b_id>
+	</command>
+	
+	<command id = "12">
+		<name>ShowAllBooks</name>
+		
+	</command>
+	
+	<command id = "13">
+		<name>SignIn</name>
+		<login>Anton</login>
+		<access>SA</access>
+	</command>
+	
+	<command id = "14">
+		<name>SignOut</name>
+		<login>Anton</login>
+	</command>
+	
+	<command id = "15">
+		<name>WrongRequest</name>		
+	</command>
+
+</commands>
