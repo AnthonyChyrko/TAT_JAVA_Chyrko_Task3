@@ -36,7 +36,7 @@ public class TstMultithreadServer {
 	MultithreadServer multithreadServer = MultithreadServer.getInstance();
 	User user = User.getInstance();
     
-	@Test(dataProvider = "scenario1", invocationCount = 10, timeOut = 100000)
+	@Test(dataProvider = "scenario1")
 	  public void scenario1(List<String> requestsList, List<String> expectedResponceList) {	
 			String[] requestsArray = new String[requestsList.size()];
 			requestsArray = requestsList.toArray(requestsArray);
@@ -46,33 +46,33 @@ public class TstMultithreadServer {
 			}			  
 	  }  
 	
-//		@Test(dataProvider = "scenario2", invocationCount = 10, timeOut = 100000)
-//		  public void scenario2(List<String> requestsList, List<String> expectedResponceList) {	
-//				String[] requestsArray = new String[requestsList.size()];
-//				requestsArray = requestsList.toArray(requestsArray);
-//				List<String> actualResponceList = multithreadServer.executeUserCommands(requestsArray);
-//				for (int i = 0; i < actualResponceList.size(); i++) {
-//					assertEquals(actualResponceList.get(i), expectedResponceList.get(i));	
-//				}			  
-//		  }  
-//		@DataProvider
-//		public Object[][] scenario2() {
-//			  List<String> requestsList = Arrays.asList(
-//					  "command=sign_in&login=Ivan&password=passWord1",
-//					  "command=edit_Login&login=IvanStoGram",					  
-//					  "command=sign_out&login=IvanStoGram"
-//					  );
-//			  
-//			  List<String> expectedResponceList = Arrays.asList(
-//					  "Welcom!",
-//					  "Login is changed!",					  
-//					  "Good Bye!"
-//					  );	  
-//			  
-//		  return new Object[][] {
-//		    new Object[] { requestsList, expectedResponceList },     
-//		  };
-//		}  
+		@Test(dataProvider = "scenario2")
+		  public void scenario2(List<String> requestsList, List<String> expectedResponceList) {	
+				String[] requestsArray = new String[requestsList.size()];
+				requestsArray = requestsList.toArray(requestsArray);
+				List<String> actualResponceList = multithreadServer.executeUserCommands(requestsArray);
+				for (int i = 0; i < actualResponceList.size(); i++) {
+					assertEquals(actualResponceList.get(i), expectedResponceList.get(i));	
+				}			  
+		  }  
+		@DataProvider
+		public Object[][] scenario2() {
+			  List<String> requestsList = Arrays.asList(
+					  "command=sign_in&login=Ivan&password=passWord1",
+					  "command=edit_Login&login=IvanStoGram",					  
+					  "command=sign_out&login=IvanStoGram"
+					  );
+			  
+			  List<String> expectedResponceList = Arrays.asList(
+					  "Welcom!",
+					  "Login is changed!",					  
+					  "Good Bye!"
+					  );	  
+			  
+		  return new Object[][] {
+		    new Object[] { requestsList, expectedResponceList },     
+		  };
+		}  
 	
   @DataProvider
   public Object[][] scenario1() {

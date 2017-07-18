@@ -31,7 +31,7 @@ public class SQLUserDAO implements UserDAO {
 	ResultSet rs;
 	Connection connection;
 	User user = User.getInstance();
-	OrderBooksList orderBooksList = OrderBooksList.getInstance();
+	OrderBooksList orderBooksList = OrderBooksList.getInstance();	
 	
 	@Override
 	public void signIn(String login, String password) throws DAOException{			

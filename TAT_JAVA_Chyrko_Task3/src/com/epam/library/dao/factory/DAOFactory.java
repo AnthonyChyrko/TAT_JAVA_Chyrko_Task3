@@ -13,7 +13,7 @@ public class DAOFactory {
 	
 	private DAOFactory(){}
 	
-	public static DAOFactory getInstance(){
+	public synchronized static DAOFactory getInstance(){
 		return instance;
 	}
 	
