@@ -32,6 +32,7 @@ public class SQLUserDAO implements UserDAO {
 	ResultSet rs;
 	Connection connection;
 //	User user = User.getInstance();
+	User user;
 	SessionStorage session = SessionStorage.getInstance();
 	OrderBooksList orderBooksList = OrderBooksList.getInstance();	
 	
@@ -40,7 +41,7 @@ public class SQLUserDAO implements UserDAO {
 		boolean signIn = false;
 		connectionPool = new ConnectionPool();		
 		connection = connectionPool.getConnection();
-		User user = session.getUserFromSession(Thread.currentThread().hashCode());
+		user = session.getUserFromSession(Thread.currentThread().hashCode());
 		try {
 			ps = connection.prepareStatement(GET_USERS);
 			rs = ps.executeQuery();
@@ -61,6 +62,7 @@ public class SQLUserDAO implements UserDAO {
 							ps.setInt(1, rs.getInt(1));			
 							user = setUserParam(user, ps.executeQuery());
 							System.out.println(Thread.currentThread().hashCode()+" - "+user.toString()+" FROM SIGN_IN");
+							
 						}else{			
 							logger.warn("User already SignIn!");
 							throw new DAOException("User already SignIn!");
@@ -94,11 +96,11 @@ public class SQLUserDAO implements UserDAO {
 	}
 	
 	@Override
-	public void signOut(String login) throws DAOException {			
+	public synchronized void signOut(String login) throws DAOException {			
 		
 		connectionPool = new ConnectionPool();		
 		connection = connectionPool.getConnection();		
-		User user = session.getUserFromSession(Thread.currentThread().hashCode());
+		user = session.getUserFromSession(Thread.currentThread().hashCode());
 		try {
 			ps = connection.prepareStatement(GET_USERS);
 			rs = ps.executeQuery();
@@ -159,8 +161,8 @@ public class SQLUserDAO implements UserDAO {
 	}
 
 	@Override
-	public void editLogin(String login) throws DAOException {
-		User user = session.getUserFromSession(Thread.currentThread().hashCode());
+	public synchronized void editLogin(String login) throws DAOException {
+		user = session.getUserFromSession(Thread.currentThread().hashCode());
 		connectionPool = new ConnectionPool();		
 		connection = connectionPool.getConnection();		
 		boolean flag = false;
@@ -193,7 +195,7 @@ public class SQLUserDAO implements UserDAO {
 
 	@Override
 	public void editPassword(String password) throws DAOException {
-		User user = session.getUserFromSession(Thread.currentThread().hashCode());
+		user = session.getUserFromSession(Thread.currentThread().hashCode());
 		connectionPool = new ConnectionPool();		
 		connection = connectionPool.getConnection();
 		
@@ -227,8 +229,8 @@ public class SQLUserDAO implements UserDAO {
 	}
 
 	@Override
-	public void editAccess(String targetLogin, String newAccess) throws DAOException {
-		User user = session.getUserFromSession(Thread.currentThread().hashCode());
+	public synchronized void editAccess(String targetLogin, String newAccess) throws DAOException {
+		user = session.getUserFromSession(Thread.currentThread().hashCode());
 		connectionPool = new ConnectionPool();		
 		connection = connectionPool.getConnection();
 		boolean flag = false;
@@ -279,7 +281,7 @@ public class SQLUserDAO implements UserDAO {
 	}
 
 	@Override
-	public void banUser(String targetlogin, String signIn) throws DAOException {
+	public synchronized void banUser(String targetlogin, String signIn) throws DAOException {
 		connectionPool = new ConnectionPool();		
 		connection = connectionPool.getConnection();
 		boolean flag = false;		
