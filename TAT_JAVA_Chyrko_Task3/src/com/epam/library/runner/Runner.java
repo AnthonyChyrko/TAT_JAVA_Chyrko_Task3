@@ -18,7 +18,7 @@ public class Runner {
 //		String request = "command=show_all_books&login=Ѹ��&access=A";  //���������� ��� �����
 //		String request = "command=add_book&title=MyFirstBook1&author=Chyrko Anton"
 //				+ "&genre=fantasy&year=2017&quantity=1";   // �������� �����
-		String request1 = "command=registration&login=Perswe123w3&password=pAss11";   // ����������� �����
+		String request1 = "command=registration&login=Perswe123w3&password=pAssyu11";   // ����������� �����
 //		String request1 = "command=sign_in&login=Semas&password=qwerty";    // ���� � �������
 //		String request = "command=sign_out&login=Anton";					// ����� �� �������
 //		String request = "command=edit_Login&login=Sema"; // ������������� login

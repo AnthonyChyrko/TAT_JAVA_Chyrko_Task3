@@ -6,6 +6,7 @@
       <class name="test.java.TstMultithreadServer">
         <methods>
           <include name="scenario2" invocation-numbers="0"/>
+          <include name="scenario1" invocation-numbers="0"/>
           <include name="beforeTest"/>
           <include name="afterTest"/>
         </methods>

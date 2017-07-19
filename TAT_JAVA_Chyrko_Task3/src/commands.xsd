@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+		targetNamespace="http://www.library.epam.com/commands" 
+		xmlns:tns="http://www.library.epam.com/commands" 
+		elementFormDefault="qualified"
+		attributeFormDefault="unqualified">
+	
+	<element name="commands">
+		<complexType>
+			<sequence>
+				<element name="command" type="tns:CommandType" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>		
+		</complexType>	
+	</element>
+	
+	<complexType name="CommandType">		
+		<sequence>
+			<element name="name" type="tns:NameType"/>
+			<element name="title" type="tns:TitleType"/>
+			<element name="login" type="tns:LoginType"/>
+			<element name="password" type="tns:PasswordType"/>
+			<element name="author" type="tns:AuthorType"/>			
+			<element name="year" type="gYear"/>
+			<element name="genre" type="tns:GenreType"/>
+			<element name="quantity" type="nonNegativeInteger"/>
+			<element name="availability" type="tns:AvailabilityType"/>			
+			<element name="signIn" type="tns:SignInType"/>
+			<element name="bookId" type="nonNegativeInteger"/>
+			<element name="userId" type="nonNegativeInteger"/>
+			<element name="access" type="tns:AccessType"/>
+			<element name="actionCommand" type="tns:ActionCommandType"/>		
+		</sequence>
+		<attribute name="id" type="ID" use="required"/>
+	</complexType>
+	
+	<simpleType name="NameType">
+		<restriction base="string">
+			<pattern value="[a-zA-Zа-яА-ЯёЁ]{1,42}" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="TitleType">
+		<restriction base="string">
+			<pattern value="[a-zA-Zа-яА-ЯёЁ]{1,42}" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="LoginType">
+		<restriction base="string">
+			<pattern value="[A-Za-z0-9-]{1,15}" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="PasswordType">
+		<restriction base="string">
+			<pattern value="([A-Z]+)([a-z]+)([0-9]+).{8,15}" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="AuthorType">
+		<restriction base="string">
+			<pattern value="[a-zA-Zа-яА-ЯёЁ]{1,42}" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="GenreType">
+		<restriction base="string">
+			<pattern value="[a-zA-Zа-яА-ЯёЁ]{1,42}" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="AvailabilityType">
+		<restriction base="string">
+			<enumeration value="Y"/>
+			<enumeration value="N"/>
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="SignInType">
+		<restriction base="string">
+			<enumeration value="IN"/>
+			<enumeration value="OUT"/>
+			<enumeration value="BAN"/>
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="AccessType">
+		<restriction base="string">
+			<enumeration value="N"/>
+			<enumeration value="U"/>
+			<enumeration value="A"/>
+			<enumeration value="SA"/>
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="ActionCommandType">
+		<restriction base="string">
+			<enumeration value="Add_book"/>
+			<enumeration value="Remove_book"/>			
+		</restriction>
+	</simpleType>	
+	
+</schema>

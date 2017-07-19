@@ -15,7 +15,7 @@
 		<name>AddSubscription</name>		
 	</command>
 	
-	<command id = "3" name = "BanUser">
+	<command id = "3">
 		<name>BanUser</name>
 		<login>Petr</login>
 		<signIn>BAN</signIn>		
@@ -40,7 +40,7 @@
 	
 	<command id = "6">
 		<name>EditBook</name>
-		<book_id>4</book_id>
+		<bookId>4</bookId>
 		<title>SuperBook3</title>
 		<author>Chyrko</author>
 		<genre>fantastik</genre>
@@ -55,7 +55,7 @@
 	<command id = "8">
 		<name>EditOrderBooksList</name>
 		<actionCommand>Add_book</actionCommand>
-		<b_id>4</b_id>
+		<bookId>4</bookId>
 	</command>
 	
 	<command id = "9">
@@ -71,13 +71,12 @@
 	
 	<command id = "11">
 		<name>RemoveSubscription</name>
-		<u_id>3</u_id>
-		<b_id>6</b_id>
+		<userId>3</userId>
+		<bookId>6</bookId>
 	</command>
 	
 	<command id = "12">
-		<name>ShowAllBooks</name>
-		
+		<name>ShowAllBooks</name>		
 	</command>
 	
 	<command id = "13">
