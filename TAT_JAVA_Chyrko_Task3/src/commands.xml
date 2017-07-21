@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<commands>
+<commands xmlns ="http://www.library.epam.com/commands"
+            xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.library.epam.com/commands commands.xsd">
 
 	<command id = "1" name="Add_Book">
-		<title>SuperBookFree2</title>
+		<title>SuperBookFree</title>
 		<author>Somebody</author>
 		<year>2017</year>
 		<genre>fantastic</genre>
@@ -20,7 +22,7 @@
 	
 	<command id = "4" name="Book_Availability">
 		<book_Id>4</book_Id>
-		<title>SuperBook3</title>
+		<title>SuperBook</title>
 		<availability>Y</availability>
 		<author>Chyrko</author>
 		<year>2015</year>
@@ -35,7 +37,7 @@
 	
 	<command id = "6" name="Edit_Book">
 		<book_Id>4</book_Id>
-		<title>SuperBook3</title>
+		<title>SuperBook</title>
 		<author>Chyrko</author>
 		<genre>fantastik</genre>
 		<quantity>15</quantity>
@@ -56,7 +58,7 @@
 	
 	<command id = "10" name="Register">
 		<login>Semas</login>
-		<password>newPassword123</password>		
+		<password>asasdsdfDFEWRTDFASDFASDFSAFSD</password>		
 	</command>
 	
 	<command id = "11" name="Remove_Subscription">

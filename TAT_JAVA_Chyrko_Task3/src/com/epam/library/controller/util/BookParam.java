@@ -1,4 +1,4 @@
-package com.epam.library.controller.utils;
+package com.epam.library.controller.util;
 
 public enum BookParam {
 	TARGET_BOOK,

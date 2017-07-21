@@ -2,11 +2,13 @@ package com.epam.library.runner;
 
 import com.epam.library.bean.User;
 import com.epam.library.controller.Controller;
+import com.epam.library.view.View;
 
 
 public class Runner {	
 
 	public static void main(String[] args) {
+		new View().start();
 //		User user = User.getInstance();		
 		
 //		user.setUser(login, password, "IN" , "dfsafasfdSA"); //user in system
@@ -18,7 +20,7 @@ public class Runner {
 //		String request = "command=show_all_books&login=Ѹ��&access=A";  //���������� ��� �����
 //		String request = "command=add_book&title=MyFirstBook1&author=Chyrko Anton"
 //				+ "&genre=fantasy&year=2017&quantity=1";   // �������� �����
-		String request1 = "command=registration&login=Perswe123w3&password=pAssyu11";   // ����������� �����
+//		String request1 = "command=registration&login=Perswe123w3&password=pAssyu11";   // ����������� �����
 //		String request1 = "command=sign_in&login=Semas&password=qwerty";    // ���� � �������
 //		String request = "command=sign_out&login=Anton";					// ����� �� �������
 //		String request = "command=edit_Login&login=Sema"; // ������������� login
@@ -35,8 +37,8 @@ public class Runner {
 		
 //		String request = "command=BOOK_AVAILABILITY&title=SuperBook3&availability=Y&author=andCompany&year=2017&genre=fantastik&quantity=50&book_id=4&"; //book availability
 //		String request = "command=edit_book&title=SuperBook&author=Anton&genre=fantastikAndProgramming&quantity=49&book_id=8&"; //edit dook
-		Controller contr = new Controller();
-		System.out.println(contr.executeTask(request1)+"\n--------------------------------------------------------------------------\n");
+//		Controller contr = new Controller();
+//		System.out.println(contr.executeTask(request1)+"\n--------------------------------------------------------------------------\n");
 //		System.out.println(contr.executeTask(request2)+"\n--------------------------------------------------------------------------\n");
 //		System.out.println(contr.executeTask(request3)+"\n--------------------------------------------------------------------------\n");
 //		System.out.println(contr.executeTask(request4)+"\n--------------------------------------------------------------------------\n");

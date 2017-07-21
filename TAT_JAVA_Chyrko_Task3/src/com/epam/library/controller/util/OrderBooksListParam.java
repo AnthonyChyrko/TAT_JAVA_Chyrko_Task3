@@ -1,4 +1,4 @@
-package com.epam.library.controller.utils;
+package com.epam.library.controller.util;
 
 public enum OrderBooksListParam {
 	B_ID,U_ID,

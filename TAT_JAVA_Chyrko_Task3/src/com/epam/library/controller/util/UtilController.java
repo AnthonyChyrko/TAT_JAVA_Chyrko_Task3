@@ -1,4 +1,4 @@
-package com.epam.library.controller.utils;
+package com.epam.library.controller.util;
 
 import org.apache.log4j.Logger;
 
@@ -7,7 +7,7 @@ import com.epam.library.bean.OrderBooksList;
 
 public class UtilController {	
 	private final static Logger logger = Logger.getLogger(UtilController.class);
-	OrderBooksList orderBooksList = OrderBooksList.getInstance();
+	private OrderBooksList orderBooksList = OrderBooksList.getInstance();
 	
 	public String recognizeParam(Enum<?> comName, String[] param){	
 		
@@ -15,7 +15,6 @@ public class UtilController {
 			String[] params = param[i].split("=");	
 			if(comName.toString().equals(params[0].toUpperCase())){
 				try {
-//					logger.info(params[0] + " - " + params[1]);//TODO � ��� ��� ����?)
 					return params[1];
 				} catch (ArrayIndexOutOfBoundsException e) {
 					logger.error("No such parameter!");
@@ -30,19 +29,19 @@ public class UtilController {
 	public Book prepareBook(String[] param) {
 		int yearInt;
 		int quantityInt;		
-		long b_id;
+		long bookId;
 		
-		String b_idStr = recognizeParam(BookParam.BOOK_ID, param);
+		String bookIdStr = recognizeParam(BookParam.BOOK_ID, param);
 		String title = recognizeParam(BookParam.TITLE, param);
 		String author = recognizeParam(BookParam.AUTHOR, param);
 		String genre = recognizeParam(BookParam.GENRE, param);
 		String year = recognizeParam(BookParam.YEAR, param);
 		String quantity = recognizeParam(BookParam.QUANTITY, param);
 		String availability = recognizeParam(BookParam.AVAILABILITY, param);
-		if(b_idStr==null || b_idStr.isEmpty()){
-			b_id = 0;
+		if(bookIdStr==null || bookIdStr.isEmpty()){
+			bookId = 0;
 		}else{
-			b_id = Integer.parseInt(b_idStr);
+			bookId = Integer.parseInt(bookIdStr);
 		}
 		if(year==null || year.isEmpty()){
 			yearInt = 0;
@@ -54,7 +53,7 @@ public class UtilController {
 		}else{
 			quantityInt = Integer.parseInt(quantity);
 		}
-		return new Book(b_id, title, author, genre, yearInt, quantityInt, availability);		
+		return new Book(bookId, title, author, genre, yearInt, quantityInt, availability);		
 	}
 
 	public OrderBooksList prepareOrderBooksList(String[] param) {

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+	targetNamespace="http://www.library.epam.com/commandList" 
+	xmlns:tns="http://www.library.epam.com/commandList" 
+	elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+	
+	<element name="commands">
+		<complexType>
+			<sequence>
+				<element name="command" type="tns:CommandType" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>		
+		</complexType>	
+	</element>
+	
+	<simpleType name="CommandType" >	
+		<restriction base="string">
+			<pattern value="[a-zA-Z_]{1,42}" />
+		</restriction>					
+	</simpleType>
+		
+</schema>

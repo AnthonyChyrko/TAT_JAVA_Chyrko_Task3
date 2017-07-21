@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commandList xmlns ="http://www.library.epam.com/commandList"
+            xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.library.epam.com/commandList commandList.xsd">
+    <commands>
+    	<command>Add_Book</command>
+    	<command>Add_Subscription</command>
+    	<command>Ban_User</command>
+    	<command>Book_Availability</command>
+    	<command>Edit_Access</command>
+    	<command>Edit_Book</command>
+    	<command>Edit_Login</command>
+    	<command>Edit_Order_Books_List</command>
+    	<command>Edit_Password</command>
+    	<command>Register</command>
+    	<command>Remove_Subscription</command>
+    	<command>Show_All_Books</command>
+    	<command>Sign_In</command>
+    	<command>Sign_Out</command>
+    	<command>Wrong_Request</command>
+    </commands>
+</commandList>

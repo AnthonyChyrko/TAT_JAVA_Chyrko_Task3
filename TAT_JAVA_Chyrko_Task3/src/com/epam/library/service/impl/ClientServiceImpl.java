@@ -16,7 +16,7 @@ import com.epam.library.service.exception.ServiceException;
 
 public class ClientServiceImpl implements ClientService {
 	private final static Logger logger = Logger.getLogger(ClientServiceImpl.class);
-	SessionStorage session = SessionStorage.getInstance();
+	private SessionStorage session = SessionStorage.getInstance();
 //	User user = User.getInstance();
 
 	private boolean checkLogin(String login){
@@ -59,8 +59,12 @@ public class ClientServiceImpl implements ClientService {
 	@Override
 	public void signOut(String login) throws ServiceException{
 		User user = session.getUserFromSession(Thread.currentThread().hashCode());
+		if(login == null || login.isEmpty() ){
+			logger.warn("Incorrect login for SignOut");
+			throw new ServiceException("Incorrect login for SignOut");
+		}
 		try {
-//			logger.info(user.toString());
+
 			if(user.getLogin()==null && user.getLogin().isEmpty()){
 				logger.warn("There is no user in the system!");
 				throw new ServiceException("There is no user in the system!");
@@ -128,6 +132,10 @@ public class ClientServiceImpl implements ClientService {
 			logger.error("You must be registered or SignIn!");
 			throw new ServiceException("You must be registered or SignIn!");
 		}		
+		if(login == null || login.isEmpty() ){	
+			logger.warn("Field login can not be empty!");
+			throw new ServiceException("Field login can not be empty!");
+		}
 		
 		try {
 			DAOFactory daoObjectFactory = DAOFactory.getInstance();
@@ -141,6 +149,18 @@ public class ClientServiceImpl implements ClientService {
 
 	@Override
 	public void editPassword(String password) throws ServiceException {
+		User user = session.getUserFromSession(Thread.currentThread().hashCode());		
+		if(user.getLogin() == null || user.getLogin().isEmpty()
+				|| user.getPassword() == null || user.getPassword().isEmpty()
+						|| user.getAccess() == null || user.getAccess().isEmpty()
+							|| user.getSignIn() == null || user.getSignIn().isEmpty()){
+			logger.warn("You must be registered or SignIn!");
+			throw new ServiceException("You must be registered or SignIn!");
+		}
+		if(password == null || password.isEmpty() ){	
+			logger.warn("Field password can not be empty!");
+			throw new ServiceException("Field password can not be empty!");
+		}
 		try {
 			DAOFactory daoObjectFactory = DAOFactory.getInstance();
 			UserDAO userDAO = daoObjectFactory.getUserDAO();
@@ -153,6 +173,33 @@ public class ClientServiceImpl implements ClientService {
 
 	@Override
 	public void editAccess(String targetLogin, String newAccess) throws ServiceException {
+		User user = session.getUserFromSession(Thread.currentThread().hashCode());
+		if(user.getLogin() == null || user.getLogin().isEmpty()
+				|| user.getPassword() == null || user.getPassword().isEmpty()
+						|| user.getAccess() == null || user.getAccess().isEmpty()
+							|| user.getSignIn() == null || user.getSignIn().isEmpty()){
+			logger.warn("You must be registered or SignIn!");
+			throw new ServiceException("You must be registered or SignIn!");
+		}
+		if(targetLogin == null || newAccess== null || targetLogin.isEmpty() || newAccess.isEmpty()){	
+			logger.warn("Target login or new access can not be empty!");
+			throw new ServiceException("Target login or new access can not be empty!");
+		}
+		if(user.getAccess().equals("A")){		
+			if(!newAccess.equals("A")){
+				logger.warn("You do not have permission to change access!");
+				throw new ServiceException("You do not have permission to change access!");
+			}
+		}else if(user.getAccess().equals("SA")){		
+
+			if(!newAccess.equals("U")&&!newAccess.equals("A")){
+				logger.warn("You do not have permission to change access!");
+				throw new ServiceException("You do not have permission to change access!");
+			}
+		}else{
+			logger.warn("You do not have permission to change access!");
+			throw new ServiceException("You do not have permission to change access!");
+		}
 		try {
 			DAOFactory daoObjectFactory = DAOFactory.getInstance();
 			UserDAO userDAO = daoObjectFactory.getUserDAO();

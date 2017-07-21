@@ -13,8 +13,8 @@
 		</complexType>	
 	</element>
 	
-	<complexType name="CommandType">		
-		<sequence>
+	<complexType name="CommandType" >		
+		<all >
 			<element name="title" type="tns:TitleType" minOccurs="0" maxOccurs="1"/>
 			<element name="login" type="tns:LoginType" minOccurs="0" maxOccurs="1"/>
 			<element name="password" type="tns:PasswordType" minOccurs="0" maxOccurs="1"/>
@@ -23,13 +23,13 @@
 			<element name="genre" type="tns:GenreType" minOccurs="0" maxOccurs="1"/>
 			<element name="quantity" type="nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
 			<element name="availability" type="tns:AvailabilityType" minOccurs="0" maxOccurs="1"/>			
-			<element name="signIn" type="tns:SignInType" minOccurs="0" maxOccurs="1"/>
-			<element name="bookId" type="nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
-			<element name="userId" type="nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
+			<element name="sign_In" type="tns:SignInType" minOccurs="0" maxOccurs="1"/>			
+			<element name="user_Id" type="nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
+			<element name="book_Id" type="nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
 			<element name="access" type="tns:AccessType" minOccurs="0" maxOccurs="1"/>
-			<element name="actionCommand" type="tns:ActionCommandType" minOccurs="0" maxOccurs="1"/>		
-		</sequence>
-		<attribute name="id" type="ID" use="required"/>
+			<element name="action_Command" type="tns:ActionCommandType" minOccurs="0" maxOccurs="1"/>		
+		</all>
+		<attribute name="id" type="string" use="required"/>
 		<attribute name="name" type="string" use="required"/>				
 	</complexType>
 	
@@ -47,7 +47,7 @@
 	
 	<simpleType name="PasswordType">
 		<restriction base="string">
-			<pattern value="([A-Z]+)([a-z]+)([0-9]+).{8,15}" />
+			<pattern value="(([a-z]{1,})|([A-Z]{1,})|([0-9]{1,})){8,15}" />
 		</restriction>
 	</simpleType>
 	

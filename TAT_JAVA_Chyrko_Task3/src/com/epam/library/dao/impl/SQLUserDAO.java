@@ -27,18 +27,17 @@ public class SQLUserDAO implements UserDAO {
 	private static final String EDIT_ACCESS = "UPDATE users SET u_access= ? WHERE u_login = ?;";
 	private static final String BAN_USER =    "UPDATE users SET u_signIn= ? WHERE u_login = ?;";
 
-	ConnectionPool connectionPool;
-	PreparedStatement ps = null;	
-	ResultSet rs;
-	Connection connection;
-//	User user = User.getInstance();
-	User user;
-	SessionStorage session = SessionStorage.getInstance();
-	OrderBooksList orderBooksList = OrderBooksList.getInstance();	
+	private SessionStorage session = SessionStorage.getInstance();
+	private OrderBooksList orderBooksList = OrderBooksList.getInstance();	
 	
 	@Override
-	public synchronized void signIn(String login, String password) throws DAOException{			
-		boolean signIn = false;
+	public synchronized void signIn(String login, String password) throws DAOException{	
+		User user;
+		ResultSet rs;
+		PreparedStatement ps;
+		ConnectionPool connectionPool = new ConnectionPool();		
+		Connection connection = connectionPool.getConnection();
+		boolean isSignInSuccessful = false;
 		connectionPool = new ConnectionPool();		
 		connection = connectionPool.getConnection();
 		user = session.getUserFromSession(Thread.currentThread().hashCode());
@@ -53,7 +52,7 @@ public class SQLUserDAO implements UserDAO {
 							logger.warn("User banned!");
 							throw new DAOException("User banned!");
 						}else if("OUT".equals(rs.getString(5))){	
-							signIn = true;
+							isSignInSuccessful = true;
 							ps = connection.prepareStatement(SIGN_IN_USER);
 							ps.setInt(1, rs.getInt(1));
 							ps.executeUpdate();								
@@ -73,7 +72,7 @@ public class SQLUserDAO implements UserDAO {
 					}
 				}
 			}		
-			if(!signIn){
+			if(!isSignInSuccessful){
 				user.nullifyUser();
 				logger.warn("Such a user does not exist yet! You can register!");
 				throw new DAOException("Such a user does not exist yet! You can register!");
@@ -97,9 +96,11 @@ public class SQLUserDAO implements UserDAO {
 	
 	@Override
 	public synchronized void signOut(String login) throws DAOException {			
-		
-		connectionPool = new ConnectionPool();		
-		connection = connectionPool.getConnection();		
+		User user;
+		ResultSet rs;
+		PreparedStatement ps;
+		ConnectionPool connectionPool = new ConnectionPool();		
+		Connection connection = connectionPool.getConnection();	
 		user = session.getUserFromSession(Thread.currentThread().hashCode());
 		try {
 			ps = connection.prepareStatement(GET_USERS);
@@ -107,7 +108,7 @@ public class SQLUserDAO implements UserDAO {
 			
 			while(rs.next()){					
 				if(login.equals(rs.getString(2))){
-//					System.out.println(login + " - " + rs.getString(2) +" + "+ rs.getString(5));//TODO remove after
+
 					if("IN".equals(rs.getString(5))){								
 						ps = connection.prepareStatement(SIGN_OUT_USER);
 						ps.setInt(1, rs.getInt(1));
@@ -126,17 +127,25 @@ public class SQLUserDAO implements UserDAO {
 		} catch (SQLException e) {			
 			logger.error("SQLException!");
 			throw new DAOException("SQLException!");
-		}		
+		}	finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				logger.error(e + " Can't close connection!");
+				
+			}
+		}	
 	}
 
 	@Override
-	public void registration(String login, String password) throws DAOException{	
-		connectionPool = new ConnectionPool();		
-		connection = connectionPool.getConnection();
-		
+	public void registration(String login, String password) throws DAOException{			
+		ResultSet rs;
+		PreparedStatement ps;
+		ConnectionPool connectionPool = new ConnectionPool();		
+		Connection connection = connectionPool.getConnection();
 		try {
 			ps = connection.prepareStatement(GET_USERS);
-			ResultSet rs = ps.executeQuery();
+			rs = ps.executeQuery();
 			
 			while(rs.next()){				
 				if(login.equals(rs.getString(2))){		
@@ -157,23 +166,33 @@ public class SQLUserDAO implements UserDAO {
 		} catch (SQLException e) {
 			logger.error("SQLException!");
 			throw new DAOException("SQLException!");
+		}	finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				logger.error(e + " Can't close connection!");
+				
+			}
 		}			
 	}
 
 	@Override
 	public synchronized void editLogin(String login) throws DAOException {
-		user = session.getUserFromSession(Thread.currentThread().hashCode());
-		connectionPool = new ConnectionPool();		
-		connection = connectionPool.getConnection();		
-		boolean flag = false;
+		User user;
+		ResultSet rs;
+		PreparedStatement ps;
+		ConnectionPool connectionPool = new ConnectionPool();		
+		Connection connection = connectionPool.getConnection();
+		user = session.getUserFromSession(Thread.currentThread().hashCode());				
+		boolean isUserFound = false;
 		try {
 			ps = connection.prepareStatement(GET_USERS);
-			ResultSet rs = ps.executeQuery();
+			rs = ps.executeQuery();
 			while(rs.next()){  //Go through the collection and if such a user is then act
 				if(user.getLogin().equals(rs.getString(2)) && user.getPassword().equals(rs.getString(3))&&
 				user.getAccess().equals(rs.getString(4)) && user.getSignIn().equals(rs.getString(5))){					
 					user.setUserId(Integer.valueOf(rs.getString(1))); //id user for edit					
-					flag = true;             
+					isUserFound = true;             
 					ps = connection.prepareStatement(EDIT_LOGIN);
 					ps.setString(1, login);
 					ps.setLong(2, user.getUserId());	
@@ -181,31 +200,32 @@ public class SQLUserDAO implements UserDAO {
 					user.setLogin(login);
 				}
 			}
-			if(!flag){
+			if(!isUserFound){
 				logger.warn("User is absent in db! Please registration!");
 				throw new DAOException("User is absent in db! Please registration!");
-			}
-			
+			}			
 			
 		} catch (SQLException e) {
 			logger.error("SQLException!");
 			throw new DAOException("SQLException!");
+		}	finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				logger.error(e + " Can't close connection!");
+				
+			}
 		}		
 	}
 
 	@Override
 	public void editPassword(String password) throws DAOException {
-		user = session.getUserFromSession(Thread.currentThread().hashCode());
-		connectionPool = new ConnectionPool();		
-		connection = connectionPool.getConnection();
-		
-		if(user.getLogin() == null || user.getLogin().isEmpty()
-				|| user.getPassword() == null || user.getPassword().isEmpty()
-						|| user.getAccess() == null || user.getAccess().isEmpty()
-							|| user.getSignIn() == null || user.getSignIn().isEmpty()){
-			logger.warn("You must be registered or SignIn!");
-			throw new DAOException("You must be registered or SignIn!");
-		}
+		User user;
+		ResultSet rs;
+		PreparedStatement ps;
+		ConnectionPool connectionPool = new ConnectionPool();		
+		Connection connection = connectionPool.getConnection();
+		user = session.getUserFromSession(Thread.currentThread().hashCode());			
 		
 		try {
 			ps = connection.prepareStatement(GET_USERS);
@@ -225,65 +245,62 @@ public class SQLUserDAO implements UserDAO {
 		} catch (SQLException e) {
 			logger.error("SQLException!");
 			throw new DAOException("SQLException!");
-		}		
+		}		finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				logger.error(e + " Can't close connection!");
+				
+			}
+		}	
 	}
 
 	@Override
 	public synchronized void editAccess(String targetLogin, String newAccess) throws DAOException {
+		User user;
+		ResultSet rs;
+		PreparedStatement ps;
+		ConnectionPool connectionPool = new ConnectionPool();		
+		Connection connection = connectionPool.getConnection();
 		user = session.getUserFromSession(Thread.currentThread().hashCode());
-		connectionPool = new ConnectionPool();		
-		connection = connectionPool.getConnection();
-		boolean flag = false;
 		
-		if(user.getLogin() == null || user.getLogin().isEmpty()
-		|| user.getPassword() == null || user.getPassword().isEmpty()
-				|| user.getAccess() == null || user.getAccess().isEmpty()
-					|| user.getSignIn() == null || user.getSignIn().isEmpty()){
-			throw new DAOException("You must be registered or SignIn!");
-		}
-		
-		if(user.getAccess().equals("A")){		
-			if(!newAccess.equals("A")){
-				logger.warn("You do not have permission to change access!");
-				throw new DAOException("You do not have permission to change access!");
-			}
-		}else if(user.getAccess().equals("SA")){		
-
-			if(!newAccess.equals("U")&&!newAccess.equals("A")){
-				logger.warn("You do not have permission to change access!");
-				throw new DAOException("You do not have permission to change access!");
-			}
-		}else{
-			logger.warn("You do not have permission to change access!");
-			throw new DAOException("You do not have permission to change access!");
-		}
+		boolean isUserFound = false;		
 		
 		try {
 			ps = connection.prepareStatement(GET_USERS);
 			rs = ps.executeQuery();	
 			while(rs.next()){
 				if(targetLogin.equals(rs.getString(2))){
-					flag = true;
+					isUserFound = true;
 					ps = connection.prepareStatement(EDIT_ACCESS);
 					ps.setString(1, newAccess);
 					ps.setString(2,targetLogin);	
 					ps.executeUpdate();								
 				}
 			}	
-			if(!flag){
+			if(!isUserFound){
 				logger.warn("User is absent in db! Please registration!");
 				throw new DAOException("User is absent in db! Please registration!");
 			}				
 		} catch (SQLException e) {
 			logger.error("SQLException!");
 			throw new DAOException("SQLException!");
-		}
+		}finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				logger.error(e + " Can't close connection!");
+				
+			}
+		}	
 	}
 
 	@Override
 	public synchronized void banUser(String targetlogin, String signIn) throws DAOException {
-		connectionPool = new ConnectionPool();		
-		connection = connectionPool.getConnection();
+		ResultSet rs;
+		PreparedStatement ps;
+		ConnectionPool connectionPool = new ConnectionPool();		
+		Connection connection = connectionPool.getConnection();
 		boolean flag = false;		
 		try {
 			ps = connection.prepareStatement(GET_USERS);
@@ -312,7 +329,14 @@ public class SQLUserDAO implements UserDAO {
 			} catch (SQLException e) {
 				logger.error("SQLException!");
 				throw new DAOException("SQLException!");
-			}
+			}finally {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					logger.error(e + " Can't close connection!");
+					
+				}
+			}	
 		}		
 
 }
