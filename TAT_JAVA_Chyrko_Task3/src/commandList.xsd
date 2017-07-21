@@ -5,13 +5,13 @@
 	elementFormDefault="qualified"
 	attributeFormDefault="unqualified">
 	
-	<element name="commands">
+	<element name="commandList">
 		<complexType>
 			<sequence>
 				<element name="command" type="tns:CommandType" minOccurs="1" maxOccurs="unbounded" />
 			</sequence>		
 		</complexType>	
-	</element>
+	</element>	
 	
 	<simpleType name="CommandType" >	
 		<restriction base="string">

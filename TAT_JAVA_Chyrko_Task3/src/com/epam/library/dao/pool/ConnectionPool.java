@@ -21,17 +21,19 @@ public class ConnectionPool {
 	private static AtomicBoolean giveConnection = new AtomicBoolean(true);
 	private static AtomicBoolean isNull = new AtomicBoolean(true);
 	private static ConnectionPool instance;
+	
 	private ArrayBlockingQueue<Connection> pool;
 	 
 	public ConnectionPool(){				 
 	}
 	 
 	public void init() throws ConnectionPoolException{
+		
 		pool = new ArrayBlockingQueue<>(DAOConstant.DEFAULT_POOL_SIZE);
 		
 		try {
 			Class.forName(DAOConstant.LOCATION_OF_JDBC_DRIVER);
-			for (int i = 0; i <= DAOConstant.DEFAULT_POOL_SIZE; i++) {
+			for (int i = 0; i < DAOConstant.DEFAULT_POOL_SIZE; i++) {
 				Connection connection = DriverManager.getConnection(DAOConstant.JDBC_URL,
 						DAOConstant.DB_USERNAME, DAOConstant.DB_PASSWORD);
 				pool.offer(connection);
@@ -63,6 +65,7 @@ public class ConnectionPool {
 		Connection connection = null;
 		if(giveConnection.get()){
 			try {
+				System.out.println(pool.remainingCapacity()+"sadf");
 				connection = pool.poll(DAOConstant.WAITING_TIMEOUT_SEC, TimeUnit.SECONDS);
 			} catch (InterruptedException e) {
 				throw new DAOException("Exception occurred when the connector was received");

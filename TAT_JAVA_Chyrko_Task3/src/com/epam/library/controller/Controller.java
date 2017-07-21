@@ -32,7 +32,7 @@ public class Controller implements LifeCircle {
 		try {
 			ServiceTool.init();
 		} catch (ServiceException e) {
-			return ControllerConstant.UNSUCCESSFUL_OPERATION;
+			return ControllerConstant.UNSUCCESSFUL_INIT;
 		}
 		return ControllerConstant.START_MESSAGE;
 	}

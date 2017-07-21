@@ -7,6 +7,16 @@ import com.epam.library.dao.pool.exception.ConnectionPoolException;
 public class DAOTool {
 	
 	private DAOTool(){}
+	
+	public static void init() throws DAOException {
+        ConnectionPool pool;
+        try {
+            pool = ConnectionPool.getInstance();
+            pool.init();
+        } catch (ConnectionPoolException e) {
+            throw new DAOException(e);
+        }
+    }
 
     public static void destroy() throws DAOException {
         ConnectionPool pool;
@@ -16,15 +26,5 @@ public class DAOTool {
         } catch (ConnectionPoolException e) {
             throw new DAOException(e);
         }
-    }
-
-    public static void init() throws DAOException {
-        ConnectionPool pool;
-        try {
-            pool = ConnectionPool.getInstance();
-            pool.init();
-        } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
-        }
-    }
+    }    
 }

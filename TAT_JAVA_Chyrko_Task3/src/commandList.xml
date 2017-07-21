@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <commandList xmlns ="http://www.library.epam.com/commandList"
             xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://www.library.epam.com/commandList commandList.xsd">
-    <commands>
+            xsi:schemaLocation="http://www.library.epam.com/commandList commandList.xsd">    
     	<command>Add_Book</command>
     	<command>Add_Subscription</command>
     	<command>Ban_User</command>
@@ -18,5 +17,5 @@
     	<command>Sign_In</command>
     	<command>Sign_Out</command>
     	<command>Wrong_Request</command>
-    </commands>
+ 
 </commandList>
