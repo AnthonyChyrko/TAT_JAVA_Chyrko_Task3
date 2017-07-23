@@ -4,11 +4,10 @@ import static org.testng.Assert.assertEquals;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 import org.testng.annotations.AfterTest;
@@ -26,19 +25,14 @@ import test.java.resources.Encodings;
 import test.java.resources.PathCommand;
 
 public class TstMultithreadServer {
-	List<String> pathFillTestDB = new ArrayList<>();
-	List<String> pathCleanTestDB = new ArrayList<>();
-	Controller controller;
-	ConnectionPool connectionPool;
-	PreparedStatement ps;	
-	ResultSet rs;
-	Connection connection;
-	StringBuilder sb;	 
-	MultithreadServer multithreadServer = MultithreadServer.getInstance();
-//	User user = User.getInstance();
-    static{
-    	
-    }
+	private List<String> pathFillTestDB = new ArrayList<>();
+	private List<String> pathCleanTestDB = new ArrayList<>();
+	private ConnectionPool connectionPool;
+	private PreparedStatement ps;	
+	private Connection connection;
+	private StringBuilder sb;	 
+	private MultithreadServer multithreadServer = MultithreadServer.getInstance();
+
 	@Test(dataProvider = "scenario1")
 	  public void scenario1(List<String> requestsList, List<String> expectedResponceList) {	
 			String[] requestsArray = new String[requestsList.size()];
@@ -100,18 +94,8 @@ public class TstMultithreadServer {
   
   @BeforeTest
   public void beforeTest() throws DAOException {
-	  pathFillTestDB.add(PathCommand.INSERT_BOOKS);
-	  pathFillTestDB.add(PathCommand.INSERT_AUTHORS);
-	  pathFillTestDB.add(PathCommand.INSERT_GENRES);
-	  pathFillTestDB.add(PathCommand.INSERT_M2M_B_A);
-	  pathFillTestDB.add(PathCommand.INSERT_M2M_B_G);
-	  pathFillTestDB.add(PathCommand.INSERT_USERS);
-	  pathFillTestDB.add(PathCommand.INSERT_SUBSCRIPTIONS);		
-	  pathFillTestDB.add(PathCommand.CREATE_TRIGGER_ADD_B_QUANTITY);
-	  pathFillTestDB.add(PathCommand.CREATE_TRIGGER_BOOK_AVAILABLE);
-	  pathFillTestDB.add(PathCommand.CREATE_TRIGGER_CREATE_DATE);
-	  pathFillTestDB.add(PathCommand.CREATE_TRIGGER_SUBSTRACT_B_QUANTITY);	  
 	  
+	  pathFillTestDB = PathCommand.getPathFillTestDB();
 	  try {
 		  
 		  Controller controller = new Controller();
@@ -122,8 +106,7 @@ public class TstMultithreadServer {
 			  
 			  sb = Encodings.readFileWithCharset(pathFillTestDB.get(i), PathCommand.CHARSET);					
 			  ps = connection.prepareStatement(""+sb);
-			  ps.executeUpdate();
-				
+			  ps.executeUpdate();				
 		  }
 			
 	  } catch (SQLException e) {	
@@ -135,23 +118,11 @@ public class TstMultithreadServer {
 
   @AfterTest
   public void afterTest() throws DAOException{
-	  
-	  pathCleanTestDB.add(PathCommand.DELETE_M2M_B_A);
-	  pathCleanTestDB.add(PathCommand.DELETE_M2M_B_G);
-	  pathCleanTestDB.add(PathCommand.DELETE_SUBSCRIPTIONS);
-	  pathCleanTestDB.add(PathCommand.DELETE_TRIGGER_ADD_B_QUANTITY);
-	  pathCleanTestDB.add(PathCommand.DELETE_TRIGGER_SUBSTRACT_B_QUANTITY);
-	  pathCleanTestDB.add(PathCommand.DELETE_TRIGGER_CREATE_DATE);
-	  pathCleanTestDB.add(PathCommand.DELETE_TRIGGER_BOOK_AVAILABLE);
-	  pathCleanTestDB.add(PathCommand.DELETE_AUTHORS);
-	  pathCleanTestDB.add(PathCommand.DELETE_GENRES);
-	  pathCleanTestDB.add(PathCommand.DELETE_USERS);
-	  pathCleanTestDB.add(PathCommand.DELETE_BOOKS);
+	  pathCleanTestDB = PathCommand.getPathCleanTestDB();
 	  try {		  
 		  connectionPool = ConnectionPool.getInstance();
 		  connection = connectionPool.getConnection();		
-		  for (int i = 0; i < pathCleanTestDB.size(); i++) {
-			  
+		  for (int i = 0; i < pathCleanTestDB.size(); i++) {			  
 			  sb = Encodings.readFileWithCharset(pathCleanTestDB.get(i), PathCommand.CHARSET);		
 			  ps = connection.prepareStatement(""+sb);
 			  ps.executeUpdate();			

@@ -2,16 +2,16 @@
 <testng-results skipped="0" failed="0" total="2" passed="2">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="700" started-at="2017-07-23T16:03:29Z" finished-at="2017-07-23T16:03:30Z">
+  <suite name="Default suite" duration-ms="683" started-at="2017-07-23T18:32:19Z" finished-at="2017-07-23T18:32:19Z">
     <groups>
     </groups>
-    <test name="scenario1" duration-ms="700" started-at="2017-07-23T16:03:29Z" finished-at="2017-07-23T16:03:30Z">
+    <test name="scenario1" duration-ms="683" started-at="2017-07-23T18:32:19Z" finished-at="2017-07-23T18:32:19Z">
       <class name="test.java.TstMultithreadServer">
-        <test-method status="PASS" signature="beforeTest()[pri:0, instance:test.java.TstMultithreadServer@31a5c39e]" name="beforeTest" is-config="true" duration-ms="431" started-at="2017-07-23T19:03:29Z" finished-at="2017-07-23T19:03:30Z">
+        <test-method status="PASS" signature="beforeTest()[pri:0, instance:test.java.TstMultithreadServer@31a5c39e]" name="beforeTest" is-config="true" duration-ms="478" started-at="2017-07-23T21:32:19Z" finished-at="2017-07-23T21:32:19Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeTest -->
-        <test-method status="PASS" signature="scenario1(java.util.List, java.util.List)[pri:0, instance:test.java.TstMultithreadServer@31a5c39e]" name="scenario1" duration-ms="33" started-at="2017-07-23T19:03:30Z" data-provider="scenario1" finished-at="2017-07-23T19:03:30Z">
+        <test-method status="PASS" signature="scenario1(java.util.List, java.util.List)[pri:0, instance:test.java.TstMultithreadServer@31a5c39e]" name="scenario1" duration-ms="32" started-at="2017-07-23T21:32:19Z" data-provider="scenario1" finished-at="2017-07-23T21:32:19Z">
           <params>
             <param index="0">
               <value>
@@ -27,7 +27,7 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- scenario1 -->
-        <test-method status="PASS" signature="scenario2(java.util.List, java.util.List)[pri:0, instance:test.java.TstMultithreadServer@31a5c39e]" name="scenario2" duration-ms="32" started-at="2017-07-23T19:03:30Z" data-provider="scenario2" finished-at="2017-07-23T19:03:30Z">
+        <test-method status="PASS" signature="scenario2(java.util.List, java.util.List)[pri:0, instance:test.java.TstMultithreadServer@31a5c39e]" name="scenario2" duration-ms="32" started-at="2017-07-23T21:32:19Z" data-provider="scenario2" finished-at="2017-07-23T21:32:19Z">
           <params>
             <param index="0">
               <value>
@@ -43,7 +43,7 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- scenario2 -->
-        <test-method status="PASS" signature="afterTest()[pri:0, instance:test.java.TstMultithreadServer@31a5c39e]" name="afterTest" is-config="true" duration-ms="208" started-at="2017-07-23T19:03:30Z" finished-at="2017-07-23T19:03:30Z">
+        <test-method status="PASS" signature="afterTest()[pri:0, instance:test.java.TstMultithreadServer@31a5c39e]" name="afterTest" is-config="true" duration-ms="128" started-at="2017-07-23T21:32:19Z" finished-at="2017-07-23T21:32:19Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- afterTest -->

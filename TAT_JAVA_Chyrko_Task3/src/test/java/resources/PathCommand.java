@@ -1,5 +1,8 @@
 package test.java.resources;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PathCommand {
 	public static final String INSERT_BOOKS = ".\\src\\test\\java\\resources\\insertData\\insertBooks.sql";
 	public static final String INSERT_AUTHORS = ".\\src\\test\\java\\resources\\insertData\\insertAuthors.sql";
@@ -29,6 +32,40 @@ public class PathCommand {
 	
 	public static final String CHARSET = "windows-1251";
 	
+	private static List<String> pathFillTestDB = new ArrayList<>();
+	private static List<String> pathCleanTestDB = new ArrayList<>();
 	
+	static{
+		pathFillTestDB.add(PathCommand.INSERT_BOOKS);
+		pathFillTestDB.add(PathCommand.INSERT_AUTHORS);
+		pathFillTestDB.add(PathCommand.INSERT_GENRES);
+		pathFillTestDB.add(PathCommand.INSERT_M2M_B_A);
+		pathFillTestDB.add(PathCommand.INSERT_M2M_B_G);
+		pathFillTestDB.add(PathCommand.INSERT_USERS);
+		pathFillTestDB.add(PathCommand.INSERT_SUBSCRIPTIONS);		
+		pathFillTestDB.add(PathCommand.CREATE_TRIGGER_ADD_B_QUANTITY);
+		pathFillTestDB.add(PathCommand.CREATE_TRIGGER_BOOK_AVAILABLE);
+		pathFillTestDB.add(PathCommand.CREATE_TRIGGER_CREATE_DATE);
+		pathFillTestDB.add(PathCommand.CREATE_TRIGGER_SUBSTRACT_B_QUANTITY);
+		
+		pathCleanTestDB.add(PathCommand.DELETE_M2M_B_A);
+		pathCleanTestDB.add(PathCommand.DELETE_M2M_B_G);
+		pathCleanTestDB.add(PathCommand.DELETE_SUBSCRIPTIONS);
+		pathCleanTestDB.add(PathCommand.DELETE_TRIGGER_ADD_B_QUANTITY);
+		pathCleanTestDB.add(PathCommand.DELETE_TRIGGER_SUBSTRACT_B_QUANTITY);
+		pathCleanTestDB.add(PathCommand.DELETE_TRIGGER_CREATE_DATE);
+		pathCleanTestDB.add(PathCommand.DELETE_TRIGGER_BOOK_AVAILABLE);
+		pathCleanTestDB.add(PathCommand.DELETE_AUTHORS);
+		pathCleanTestDB.add(PathCommand.DELETE_GENRES);
+		pathCleanTestDB.add(PathCommand.DELETE_USERS);
+		pathCleanTestDB.add(PathCommand.DELETE_BOOKS);
+	}
+	
+	public static List<String> getPathFillTestDB(){
+		return pathFillTestDB;
+	}
+	public static List<String> getPathCleanTestDB(){
+		return pathCleanTestDB;
+	}
 	
 }
