@@ -15,8 +15,6 @@ public class PathCommand {
 	public static final String CREATE_TRIGGER_CREATE_DATE = ".\\src\\test\\java\\resources\\insertData\\createTriggerCreateDate.sql";
 	public static final String CREATE_TRIGGER_SUBSTRACT_B_QUANTITY = ".\\src\\test\\java\\resources\\insertData\\createTriggerSubtractBQuantity.sql";
 	
-	
-	
 	public static final String DELETE_BOOKS = ".\\src\\test\\java\\resources\\deleteData\\deleteBooks.sql";
 	public static final String DELETE_AUTHORS = ".\\src\\test\\java\\resources\\deleteData\\deleteAuthors.sql";
 	public static final String DELETE_GENRES = ".\\src\\test\\java\\resources\\deleteData\\deleteGenres.sql";
@@ -29,7 +27,8 @@ public class PathCommand {
 	public static final String DELETE_TRIGGER_CREATE_DATE = ".\\src\\test\\java\\resources\\deleteData\\deleteTriggerCreateDate.sql";
 	public static final String DELETE_TRIGGER_SUBSTRACT_B_QUANTITY = ".\\src\\test\\java\\resources\\deleteData\\deleteTriggerSubtractBQuantity.sql";
 	
-	
-	
 	public static final String CHARSET = "windows-1251";
+	
+	
+	
 }

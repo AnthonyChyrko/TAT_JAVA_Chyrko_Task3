@@ -78,10 +78,10 @@ public class SQLUserDAO implements UserDAO {
 				throw new DAOException("Such a user does not exist yet! You can register!");
 			}
 		} catch (SQLException e) {
-			logger.error("SQLException!");
+			logger.error("SQLException!",e);
 			throw new DAOException("SQLException!",e);
 		} catch (ConnectionPoolException e) {
-			logger.error("ConnectionPoolException!");
+			logger.error("ConnectionPoolException!",e);
 			throw new DAOException("ConnectionPoolException!",e);
 		}	
 	}
@@ -116,10 +116,10 @@ public class SQLUserDAO implements UserDAO {
 				}
 			}			
 		} catch (SQLException  e) {			
-			logger.error("SQLException!");
+			logger.error("SQLException!",e);
 			throw new DAOException("SQLException!",e);
 		}catch (ConnectionPoolException e) {
-			logger.error("ConnectionPoolException!");
+			logger.error("ConnectionPoolException!",e);
 			throw new DAOException("ConnectionPoolException!",e);
 		}
 	}
@@ -153,11 +153,11 @@ public class SQLUserDAO implements UserDAO {
 			ps.executeUpdate();
 			
 		} catch (SQLException e) {
-			logger.error("SQLException!");
-			throw new DAOException("SQLException!");
+			logger.error("SQLException!",e);
+			throw new DAOException("SQLException!",e);
 		
 		} catch (ConnectionPoolException e) {
-			logger.error("ConnectionPoolException!");
+			logger.error("ConnectionPoolException!",e);
 			throw new DAOException("ConnectionPoolException!",e);
 		}			
 	}
@@ -193,10 +193,10 @@ public class SQLUserDAO implements UserDAO {
 			}			
 			
 		}catch (SQLException e) {
-				logger.error(" Can't close connection!",e);
-				
+				logger.error("Can't close connection!",e);
+				throw new DAOException("Can't close connection!",e);
 		}catch (ConnectionPoolException e) {
-				logger.error("ConnectionPoolException!");
+				logger.error("ConnectionPoolException!",e);
 				throw new DAOException("ConnectionPoolException!",e);
 		}
 	}		
@@ -228,10 +228,10 @@ public class SQLUserDAO implements UserDAO {
 				}
 			}			
 		} catch (SQLException e) {
-			logger.error("SQLException!");
+			logger.error("SQLException!",e);
 			throw new DAOException("SQLException!", e);		
 		} catch (ConnectionPoolException e) {
-			logger.error("ConnectionPoolException!");
+			logger.error("ConnectionPoolException!",e);
 			throw new DAOException("ConnectionPoolException!",e);
 		}	
 	}
@@ -264,10 +264,10 @@ public class SQLUserDAO implements UserDAO {
 				throw new DAOException("User is absent in db! Please registration!");
 			}				
 		} catch (SQLException e) {
-			logger.error("SQLException!");
-			throw new DAOException("SQLException!");
+			logger.error("SQLException!",e);
+			throw new DAOException("SQLException!",e);
 		}catch (ConnectionPoolException e) {
-			logger.error("ConnectionPoolException!");
+			logger.error("ConnectionPoolException!",e);
 			throw new DAOException("ConnectionPoolException!",e);
 		}
 			
@@ -307,9 +307,9 @@ public class SQLUserDAO implements UserDAO {
 			}		
 			} catch (SQLException e) {
 				logger.error("SQLException!", e);
-				throw new DAOException("SQLException!");
+				throw new DAOException("SQLException!",e);
 			}catch (ConnectionPoolException e) {
-				logger.error("ConnectionPoolException!");
+				logger.error("ConnectionPoolException!",e);
 				throw new DAOException("ConnectionPoolException!",e);
 			}	
 		}		

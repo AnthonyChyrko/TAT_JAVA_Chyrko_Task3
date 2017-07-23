@@ -16,7 +16,6 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import com.epam.library.bean.User;
 import com.epam.library.controller.Controller;
 import com.epam.library.dao.exception.DAOException;
 import com.epam.library.dao.pool.ConnectionPool;
@@ -37,7 +36,9 @@ public class TstMultithreadServer {
 	StringBuilder sb;	 
 	MultithreadServer multithreadServer = MultithreadServer.getInstance();
 //	User user = User.getInstance();
-    
+    static{
+    	
+    }
 	@Test(dataProvider = "scenario1")
 	  public void scenario1(List<String> requestsList, List<String> expectedResponceList) {	
 			String[] requestsArray = new String[requestsList.size()];
@@ -109,41 +110,32 @@ public class TstMultithreadServer {
 	  pathFillTestDB.add(PathCommand.CREATE_TRIGGER_ADD_B_QUANTITY);
 	  pathFillTestDB.add(PathCommand.CREATE_TRIGGER_BOOK_AVAILABLE);
 	  pathFillTestDB.add(PathCommand.CREATE_TRIGGER_CREATE_DATE);
-	  pathFillTestDB.add(PathCommand.CREATE_TRIGGER_SUBSTRACT_B_QUANTITY);
-	  
+	  pathFillTestDB.add(PathCommand.CREATE_TRIGGER_SUBSTRACT_B_QUANTITY);	  
 	  
 	  try {
+		  
 		  Controller controller = new Controller();
 		  controller.init();
 		  ConnectionPool connectionPool = ConnectionPool.getInstance();
 		  Connection connection = connectionPool.getConnection();		  
-			for (int i = 0; i < pathFillTestDB.size(); i++) {
-				sb = Encodings.readFileWithCharset(pathFillTestDB.get(i), PathCommand.CHARSET);			
-	//			System.out.println(""+sb);
-				try {
-					ps = connection.prepareStatement(""+sb);
-					ps.executeUpdate();
-				} catch (SQLException e) {				
-					e.printStackTrace();
-				}
-			}
-	  	} catch (ConnectionPoolException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		  for (int i = 0; i < pathFillTestDB.size(); i++) {
+			  
+			  sb = Encodings.readFileWithCharset(pathFillTestDB.get(i), PathCommand.CHARSET);					
+			  ps = connection.prepareStatement(""+sb);
+			  ps.executeUpdate();
+				
 		  }
+			
+	  } catch (SQLException e) {	
+		  e.printStackTrace();
+	  } catch (ConnectionPoolException e) {	
+		  e.printStackTrace();
+	  }
   }
 
   @AfterTest
-  public void afterTest() throws DAOException {
-
-	  try {
-		connectionPool = ConnectionPool.getInstance();
-	} catch (ConnectionPoolException e1) {
-		// TODO Auto-generated catch block
-		e1.printStackTrace();
-	}
-	  connection = connectionPool.getConnection();
-
+  public void afterTest() throws DAOException{
+	  
 	  pathCleanTestDB.add(PathCommand.DELETE_M2M_B_A);
 	  pathCleanTestDB.add(PathCommand.DELETE_M2M_B_G);
 	  pathCleanTestDB.add(PathCommand.DELETE_SUBSCRIPTIONS);
@@ -154,17 +146,21 @@ public class TstMultithreadServer {
 	  pathCleanTestDB.add(PathCommand.DELETE_AUTHORS);
 	  pathCleanTestDB.add(PathCommand.DELETE_GENRES);
 	  pathCleanTestDB.add(PathCommand.DELETE_USERS);
-	  pathCleanTestDB.add(PathCommand.DELETE_BOOKS);	
-	
-		for (int i = 0; i < pathCleanTestDB.size(); i++) {
-			sb = Encodings.readFileWithCharset(pathCleanTestDB.get(i), PathCommand.CHARSET);			
-//			System.out.println(""+sb);
-			try {
-				ps = connection.prepareStatement(""+sb);
-				ps.executeUpdate();
-			} catch (SQLException e) {				
-				e.printStackTrace();
-			}
-		}	
+	  pathCleanTestDB.add(PathCommand.DELETE_BOOKS);
+	  try {		  
+		  connectionPool = ConnectionPool.getInstance();
+		  connection = connectionPool.getConnection();		
+		  for (int i = 0; i < pathCleanTestDB.size(); i++) {
+			  
+			  sb = Encodings.readFileWithCharset(pathCleanTestDB.get(i), PathCommand.CHARSET);		
+			  ps = connection.prepareStatement(""+sb);
+			  ps.executeUpdate();			
+		  }
+	  } catch (SQLException e) {				
+			e.printStackTrace();
+	  } catch (ConnectionPoolException e1) {
+		  e1.printStackTrace();
+	  }	  	
   }
+  
 }

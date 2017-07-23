@@ -19,6 +19,7 @@ import com.epam.library.controller.util.OrderBooksListParam;
 import com.epam.library.dao.BookDAO;
 import com.epam.library.dao.exception.DAOException;
 import com.epam.library.dao.pool.ConnectionPool;
+import com.epam.library.dao.pool.exception.ConnectionPoolException;
 
 public class SQLBookDAO implements BookDAO{
 	private final static Logger logger = Logger.getLogger(SQLBookDAO.class);
@@ -62,16 +63,17 @@ public class SQLBookDAO implements BookDAO{
 	public void addBook(Book book) throws DAOException{		
 		ResultSet rs;
 		PreparedStatement ps;
-		ConnectionPool connectionPool = new ConnectionPool();		
-		Connection connection = connectionPool.getConnection();
-		
 		int authorId=0;
 		int genreId=0;
 		int bookId=0;
 		
 		boolean newAuthor = true;
 		boolean newGenre = true;
-		try {			
+		try {
+		ConnectionPool connectionPool = ConnectionPool.getInstance();		
+		Connection connection = connectionPool.getConnection();	
+		
+					
 			ps = connection.prepareStatement(GET_BOOKS_INFO);
 			rs = ps.executeQuery();
 			
@@ -141,37 +143,30 @@ public class SQLBookDAO implements BookDAO{
 			ps.setInt(2, genreId);
 			ps.executeUpdate();			
 		} catch (SQLException e) {
-			logger.error("SQLException!");
-			throw new DAOException("SQLException!");
-		}finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				logger.error(e + " Can't close connection!");
-				
-			}
+			logger.error("SQLException!",e);
+			throw new DAOException("SQLException!",e);
+		}catch (ConnectionPoolException e) {
+			logger.error("ConnectionPoolException!",e);
+			throw new DAOException("ConnectionPoolException!",e);
 		}			
 	}
 
 	@Override
 	public void deleteBook(long idBook) throws DAOException{
 		PreparedStatement ps;
-		ConnectionPool connectionPool = new ConnectionPool();		
-		Connection connection = connectionPool.getConnection();
 		try {
+			ConnectionPool connectionPool = ConnectionPool.getInstance();		
+			Connection connection = connectionPool.getConnection();	
+		
 			ps = connection.prepareStatement(DELETE_BOOK);
 			ps.setLong(1, idBook);
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			logger.error("SQLException!");
-			throw new DAOException("SQLException!");
-		}finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				logger.error(e + " Can't close connection!");
-				
-			}
+			logger.error("SQLException!",e);
+			throw new DAOException("SQLException!",e);
+		}catch (ConnectionPoolException e) {
+			logger.error("ConnectionPoolException!",e);
+			throw new DAOException("ConnectionPoolException!",e);
 		}	
 		
 	}
@@ -180,9 +175,10 @@ public class SQLBookDAO implements BookDAO{
 	public void showAllBooks() throws DAOException {
 		ResultSet rs;
 		PreparedStatement ps;
-		ConnectionPool connectionPool = new ConnectionPool();		
-		Connection connection = connectionPool.getConnection();
 		try {
+			ConnectionPool connectionPool = ConnectionPool.getInstance();		
+			Connection connection = connectionPool.getConnection();		
+		
 			ps = connection.prepareStatement(GET_BOOKS_INFO);
 			rs = ps.executeQuery();
 			while(rs.next()){
@@ -191,66 +187,65 @@ public class SQLBookDAO implements BookDAO{
 			}
 				
 		} catch (SQLException e) {
-			logger.error("SQLException!");
-			throw new DAOException("SQLException!");
-		}finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				logger.error(e + " Can't close connection!");
-				
-			}
+			logger.error("SQLException!",e);
+			throw new DAOException("SQLException!",e);
+		}catch (ConnectionPoolException e) {
+			logger.error("ConnectionPoolException!",e);
+			throw new DAOException("ConnectionPoolException!",e);
 		}			
 	}
 
 	@Override
 	public void editBook(Book book) throws DAOException {
 		
-		ConnectionPool connectionPool = new ConnectionPool();		
-		Connection connection = connectionPool.getConnection();			
+		ConnectionPool connectionPool;
+		try {
+			connectionPool = ConnectionPool.getInstance();
+			Connection connection = connectionPool.getConnection();			
+			
+			if(book.getTitle()!=null && !book.getTitle().isEmpty()){
+				editParam(book.getTitle(), book.getId(), connection, EDIT_BOOK_TITLE);
+			}
+			if(book.getAuthor()!=null && !book.getAuthor().isEmpty()){
+				editParam(book.getAuthor(), book.getId(), connection, EDIT_BOOK_AUTHOR);
+			}
+			if(book.getYear()!=0){
+				editParam(book.getYear(), book.getId(), connection, EDIT_BOOK_YEAR);
+			}
+			if(book.getQuantity()!=0){
+				editParam(book.getQuantity(), book.getId(), connection, EDIT_BOOK_QUANTITY);
+			}
+			if(book.getGenre()!=null && !book.getGenre().isEmpty()){
+				editParam(book.getGenre(), book.getId(), connection, EDIT_BOOK_GENRE);
+			}
+			if(book.getAvailability()!=null && !book.getAvailability().isEmpty()){
+				editParam(book.getAvailability(), book.getId(), connection, EDIT_BOOK_AVAILABILITY);
+			}
+		} catch (ConnectionPoolException e) {
+			logger.error("ConnectionPoolException!",e);
+			throw new DAOException("ConnectionPoolException!",e);
+		}	
 		
-		if(book.getTitle()!=null && !book.getTitle().isEmpty()){
-			editParam(book.getTitle(), book.getId(), connection, EDIT_BOOK_TITLE);
-		}
-		if(book.getAuthor()!=null && !book.getAuthor().isEmpty()){
-			editParam(book.getAuthor(), book.getId(), connection, EDIT_BOOK_AUTHOR);
-		}
-		if(book.getYear()!=0){
-			editParam(book.getYear(), book.getId(), connection, EDIT_BOOK_YEAR);
-		}
-		if(book.getQuantity()!=0){
-			editParam(book.getQuantity(), book.getId(), connection, EDIT_BOOK_QUANTITY);
-		}
-		if(book.getGenre()!=null && !book.getGenre().isEmpty()){
-			editParam(book.getGenre(), book.getId(), connection, EDIT_BOOK_GENRE);
-		}
-		if(book.getAvailability()!=null && !book.getAvailability().isEmpty()){
-			editParam(book.getAvailability(), book.getId(), connection, EDIT_BOOK_AVAILABILITY);
-		}
 	}
 
 	
 	@Override
 	public void bookAvailability(long b_id, String availability) throws DAOException {
 		PreparedStatement ps;
-		ConnectionPool connectionPool = new ConnectionPool();		
-		Connection connection = connectionPool.getConnection();
-		
-		try {			
+		try {	
+			ConnectionPool connectionPool = ConnectionPool.getInstance();		
+			Connection connection = connectionPool.getConnection();			
+				
 			ps = connection.prepareStatement(BOOK_AVAILABILITY);
 			ps.setString(1, availability);
 			ps.setLong(2, b_id);
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			logger.error("SQLException!");
-			throw new DAOException("SQLException!");
-		}finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				logger.error(e + " Can't close connection!");
-				
-			}
+			logger.error("SQLException!",e);
+			throw new DAOException("SQLException!",e);
+		}catch (ConnectionPoolException e) {
+			logger.error("ConnectionPoolException!",e);
+			throw new DAOException("ConnectionPoolException!",e);
 		}			
 	}
 
@@ -259,12 +254,12 @@ public class SQLBookDAO implements BookDAO{
 		User user = session.getUserFromSession(Thread.currentThread().hashCode());
 		Book book = null;
 		ResultSet rs;
-		PreparedStatement ps;
-		ConnectionPool connectionPool = new ConnectionPool();		
-		Connection connection = connectionPool.getConnection();	
+		PreparedStatement ps;			
 		
 		if(OrderBooksListParam.ADD_BOOK.toString().equals(orderBooksList.getActionCommand().toUpperCase())){			
 			try {
+				ConnectionPool connectionPool = ConnectionPool.getInstance();		
+				Connection connection = connectionPool.getConnection();	
 				ps = connection.prepareStatement(GET_BOOK_INFO);
 				ps.setLong(1, orderBooksList.getBookId());
 				rs = ps.executeQuery();//get book			
@@ -280,15 +275,11 @@ public class SQLBookDAO implements BookDAO{
 					orderBooksList.getOrderBooksList().add(book);					
 				}				
 			} catch (SQLException e) {
-				logger.error("SQLException!");
-				throw new DAOException("SQLException!");
-			}finally {
-				try {
-					connection.close();
-				} catch (SQLException e) {
-					logger.error(e + " Can't close connection!");
-					
-				}
+				logger.error("SQLException!",e);
+				throw new DAOException("SQLException!",e);
+			}catch (ConnectionPoolException e) {
+				logger.error("ConnectionPoolException!",e);
+				throw new DAOException("ConnectionPoolException!",e);
 			}	
 			
 		}else if (OrderBooksListParam.REMOVE_BOOK.toString().equals(orderBooksList.getActionCommand().toUpperCase())){
@@ -310,9 +301,10 @@ public class SQLBookDAO implements BookDAO{
 	public void addSubscription(OrderBooksList orderBooksList) throws DAOException {
 		ResultSet rs;
 		PreparedStatement ps;
-		ConnectionPool connectionPool = new ConnectionPool();		
-		Connection connection = connectionPool.getConnection();
-		try {			
+		try {
+			ConnectionPool connectionPool = ConnectionPool.getInstance();		
+			Connection connection = connectionPool.getConnection();		
+					
 			for (int i = 0; i < orderBooksList.getOrderBooksList().size(); i++) {
 				//get all books				
 				ps = connection.prepareStatement(GET_BOOKS);
@@ -330,15 +322,11 @@ public class SQLBookDAO implements BookDAO{
 				}				
 			}			
 		} catch (SQLException e) {
-			logger.error("SQLException!");
-			throw new DAOException("SQLException!");
-		}finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				logger.error(e + " Can't close connection!");
-				
-			}
+			logger.error("SQLException!",e);
+			throw new DAOException("SQLException!",e);
+		}catch (ConnectionPoolException e) {
+			logger.error("ConnectionPoolException!",e);
+			throw new DAOException("ConnectionPoolException!",e);
 		}			
 	}
 
@@ -346,9 +334,10 @@ public class SQLBookDAO implements BookDAO{
 	public void removeSubscription(long userId, long bookId) throws DAOException {
 		ResultSet rs;
 		PreparedStatement ps;
-		ConnectionPool connectionPool = new ConnectionPool();		
-		Connection connection = connectionPool.getConnection();
 		try {
+			ConnectionPool connectionPool = ConnectionPool.getInstance();		
+			Connection connection = connectionPool.getConnection();		
+		
 			ps = connection.prepareStatement(GET_ALL_SUBSCRIPTIONS);
 			rs = ps.executeQuery();
 			while(rs.next()){
@@ -359,20 +348,15 @@ public class SQLBookDAO implements BookDAO{
 				}
 			}			
 		} catch (SQLException e) {
-			logger.error("SQLException!");
-			throw new DAOException("SQLException!");
-		}finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				logger.error(e + " Can't close connection!");
-				
-			}
-		}			
+			logger.error("SQLException!",e);
+			throw new DAOException("SQLException!",e);
+		}catch (ConnectionPoolException e) {
+			logger.error("ConnectionPoolException!",e);
+			throw new DAOException("ConnectionPoolException!",e);
+		}				
 	}
 	
-	private void editParam(String param, long idBook, Connection connection, String query) throws DAOException{
-		
+	private void editParam(String param, long idBook, Connection connection, String query) throws DAOException{		
 		PreparedStatement ps;		
 		try {
 			ps = connection.prepareStatement(query);
@@ -380,8 +364,8 @@ public class SQLBookDAO implements BookDAO{
 			ps.setLong(2, idBook);
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			logger.error("SQLException!");
-			throw new DAOException("SQLException!");
+			logger.error("SQLException!",e);
+			throw new DAOException("SQLException!",e);
 		}		
 	}
 	private void editParam(long param, long idBook, Connection connection, String query) throws DAOException{	
@@ -392,8 +376,8 @@ public class SQLBookDAO implements BookDAO{
 			ps.setLong(2, idBook);
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			logger.error("SQLException!");
-			throw new DAOException("SQLException!");
+			logger.error("SQLException!",e);
+			throw new DAOException("SQLException!",e);
 		}		
 	}
 
