@@ -5,10 +5,8 @@
     <classes>
       <class name="test.java.TstMultithreadServer">
         <methods>
-          <include name="scenario2"/>
           <include name="scenario1"/>
           <include name="beforeTest"/>
-          <include name="afterTest"/>
         </methods>
       </class> <!-- test.java.TstMultithreadServer -->
     </classes>

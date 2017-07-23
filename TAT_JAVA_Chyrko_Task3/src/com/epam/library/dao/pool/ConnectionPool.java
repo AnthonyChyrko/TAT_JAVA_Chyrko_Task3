@@ -61,15 +61,10 @@ public class ConnectionPool {
         return instance;
 	}
 	
-	public Connection getConnection() throws DAOException{
+	public synchronized Connection getConnection() throws DAOException{
 		Connection connection = null;
 		if(giveConnection.get()){
-			try {
-				System.out.println(pool.remainingCapacity()+"sadf");
-				connection = pool.poll(DAOConstant.WAITING_TIMEOUT_SEC, TimeUnit.SECONDS);
-			} catch (InterruptedException e) {
-				throw new DAOException("Exception occurred when the connector was received");
-			}
+			connection = pool.element();
 		}
 		return connection;
 	}
@@ -80,13 +75,8 @@ public class ConnectionPool {
         }
     }
 	
-	public void cleanUp() throws ConnectionPoolException{
-		giveConnection = new AtomicBoolean(false);
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			throw new ConnectionPoolException("InterruptedException occurred during connection pool cleaning",e);
-		}
+	public synchronized void cleanUp() throws ConnectionPoolException{
+		giveConnection = new AtomicBoolean(false);		
 		
 		Iterator<Connection> iter = pool.iterator();
 		while(iter.hasNext()){

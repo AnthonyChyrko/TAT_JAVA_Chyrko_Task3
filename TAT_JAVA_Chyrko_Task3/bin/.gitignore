@@ -1,9 +1,8 @@
 /com/
+/commandList.xml
+/commandList.xsd
 /commands.xml
 /commands.xsd
-/commands.out.xml
-/commandsList.xml
-/commandList.xml
-/comandList.xsd
-/commandList.xsd
+/log4j.properties
 /test/
+/testNG.xml

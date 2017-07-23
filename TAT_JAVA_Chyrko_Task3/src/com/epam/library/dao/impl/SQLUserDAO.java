@@ -14,6 +14,7 @@ import com.epam.library.controller.session.SessionStorage;
 import com.epam.library.dao.UserDAO;
 import com.epam.library.dao.exception.DAOException;
 import com.epam.library.dao.pool.ConnectionPool;
+import com.epam.library.dao.pool.exception.ConnectionPoolException;
 
 public class SQLUserDAO implements UserDAO {
 	private final static Logger logger = Logger.getLogger(SQLUserDAO.class);
@@ -31,17 +32,16 @@ public class SQLUserDAO implements UserDAO {
 	private OrderBooksList orderBooksList = OrderBooksList.getInstance();	
 	
 	@Override
-	public synchronized void signIn(String login, String password) throws DAOException{	
+	public void signIn(String login, String password) throws DAOException{	
 		User user;
 		ResultSet rs;
 		PreparedStatement ps;
-		ConnectionPool connectionPool = new ConnectionPool();		
-		Connection connection = connectionPool.getConnection();
 		boolean isSignInSuccessful = false;
-		connectionPool = new ConnectionPool();		
-		connection = connectionPool.getConnection();
-		user = session.getUserFromSession(Thread.currentThread().hashCode());
 		try {
+			ConnectionPool connectionPool = ConnectionPool.getInstance();		
+			Connection connection = connectionPool.getConnection();				
+			user = session.getUserFromSession(Thread.currentThread().hashCode());
+		
 			ps = connection.prepareStatement(GET_USERS);
 			rs = ps.executeQuery();
 			
@@ -79,30 +79,22 @@ public class SQLUserDAO implements UserDAO {
 			}
 		} catch (SQLException e) {
 			logger.error("SQLException!");
-			throw new DAOException("SQLException!");
+			throw new DAOException("SQLException!",e);
+		} catch (ConnectionPoolException e) {
+			logger.error("ConnectionPoolException!");
+			throw new DAOException("ConnectionPoolException!",e);
 		}	
 	}
 	
-	private User setUserParam(User user, ResultSet rs) throws SQLException{			
-			while(rs.next()){
-				user.setUserId(rs.getInt(1));			
-				user.setLogin(rs.getString(2));
-				user.setPassword(rs.getString(3));
-				user.setAccess(rs.getString(4));
-				user.setSignIn(rs.getString(5));	
-			}		
-		return user;		
-	}
-	
 	@Override
-	public synchronized void signOut(String login) throws DAOException {			
+	public void signOut(String login) throws DAOException {			
 		User user;
 		ResultSet rs;
 		PreparedStatement ps;
-		ConnectionPool connectionPool = new ConnectionPool();		
-		Connection connection = connectionPool.getConnection();	
-		user = session.getUserFromSession(Thread.currentThread().hashCode());
 		try {
+			ConnectionPool connectionPool = ConnectionPool.getInstance();		
+			Connection connection = connectionPool.getConnection();	
+			user = session.getUserFromSession(Thread.currentThread().hashCode());			
 			ps = connection.prepareStatement(GET_USERS);
 			rs = ps.executeQuery();
 			
@@ -122,28 +114,24 @@ public class SQLUserDAO implements UserDAO {
 						throw new DAOException("User already SignOut!");
 					}
 				}
-			}
-			
-		} catch (SQLException e) {			
+			}			
+		} catch (SQLException  e) {			
 			logger.error("SQLException!");
-			throw new DAOException("SQLException!");
-		}	finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				logger.error(e + " Can't close connection!");
-				
-			}
-		}	
+			throw new DAOException("SQLException!",e);
+		}catch (ConnectionPoolException e) {
+			logger.error("ConnectionPoolException!");
+			throw new DAOException("ConnectionPoolException!",e);
+		}
 	}
 
 	@Override
 	public void registration(String login, String password) throws DAOException{			
 		ResultSet rs;
 		PreparedStatement ps;
-		ConnectionPool connectionPool = new ConnectionPool();		
-		Connection connection = connectionPool.getConnection();
+		ConnectionPool connectionPool;
 		try {
+			connectionPool = ConnectionPool.getInstance();
+			Connection connection = connectionPool.getConnection();		
 			ps = connection.prepareStatement(GET_USERS);
 			rs = ps.executeQuery();
 			
@@ -163,29 +151,28 @@ public class SQLUserDAO implements UserDAO {
 			ps.setString(3, "U");
 			ps.setString(4, "OUT");
 			ps.executeUpdate();
+			
 		} catch (SQLException e) {
 			logger.error("SQLException!");
 			throw new DAOException("SQLException!");
-		}	finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				logger.error(e + " Can't close connection!");
-				
-			}
+		
+		} catch (ConnectionPoolException e) {
+			logger.error("ConnectionPoolException!");
+			throw new DAOException("ConnectionPoolException!",e);
 		}			
 	}
 
 	@Override
-	public synchronized void editLogin(String login) throws DAOException {
+	public void editLogin(String login) throws DAOException {
 		User user;
 		ResultSet rs;
 		PreparedStatement ps;
-		ConnectionPool connectionPool = new ConnectionPool();		
-		Connection connection = connectionPool.getConnection();
-		user = session.getUserFromSession(Thread.currentThread().hashCode());				
 		boolean isUserFound = false;
 		try {
+			ConnectionPool connectionPool = ConnectionPool.getInstance();		
+			Connection connection = connectionPool.getConnection();
+			user = session.getUserFromSession(Thread.currentThread().hashCode());				
+			
 			ps = connection.prepareStatement(GET_USERS);
 			rs = ps.executeQuery();
 			while(rs.next()){  //Go through the collection and if such a user is then act
@@ -205,29 +192,27 @@ public class SQLUserDAO implements UserDAO {
 				throw new DAOException("User is absent in db! Please registration!");
 			}			
 			
-		} catch (SQLException e) {
-			logger.error("SQLException!");
-			throw new DAOException("SQLException!");
-		}	finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				logger.error(e + " Can't close connection!");
+		}catch (SQLException e) {
+				logger.error(" Can't close connection!",e);
 				
-			}
-		}		
-	}
+		}catch (ConnectionPoolException e) {
+				logger.error("ConnectionPoolException!");
+				throw new DAOException("ConnectionPoolException!",e);
+		}
+	}		
+
 
 	@Override
 	public void editPassword(String password) throws DAOException {
 		User user;
 		ResultSet rs;
 		PreparedStatement ps;
-		ConnectionPool connectionPool = new ConnectionPool();		
-		Connection connection = connectionPool.getConnection();
-		user = session.getUserFromSession(Thread.currentThread().hashCode());			
-		
 		try {
+			ConnectionPool connectionPool = ConnectionPool.getInstance();		
+			Connection connection = connectionPool.getConnection();
+			user = session.getUserFromSession(Thread.currentThread().hashCode());			
+		
+		
 			ps = connection.prepareStatement(GET_USERS);
 			rs = ps.executeQuery();
 			while(rs.next()){  
@@ -244,29 +229,25 @@ public class SQLUserDAO implements UserDAO {
 			}			
 		} catch (SQLException e) {
 			logger.error("SQLException!");
-			throw new DAOException("SQLException!");
-		}		finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				logger.error(e + " Can't close connection!");
-				
-			}
+			throw new DAOException("SQLException!", e);		
+		} catch (ConnectionPoolException e) {
+			logger.error("ConnectionPoolException!");
+			throw new DAOException("ConnectionPoolException!",e);
 		}	
 	}
 
 	@Override
-	public synchronized void editAccess(String targetLogin, String newAccess) throws DAOException {
+	public void editAccess(String targetLogin, String newAccess) throws DAOException {
 		User user;
 		ResultSet rs;
 		PreparedStatement ps;
-		ConnectionPool connectionPool = new ConnectionPool();		
-		Connection connection = connectionPool.getConnection();
-		user = session.getUserFromSession(Thread.currentThread().hashCode());
-		
 		boolean isUserFound = false;		
 		
 		try {
+			ConnectionPool connectionPool = ConnectionPool.getInstance();		
+			Connection connection = connectionPool.getConnection();
+			user = session.getUserFromSession(Thread.currentThread().hashCode());		
+		
 			ps = connection.prepareStatement(GET_USERS);
 			rs = ps.executeQuery();	
 			while(rs.next()){
@@ -285,24 +266,22 @@ public class SQLUserDAO implements UserDAO {
 		} catch (SQLException e) {
 			logger.error("SQLException!");
 			throw new DAOException("SQLException!");
-		}finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				logger.error(e + " Can't close connection!");
-				
-			}
-		}	
+		}catch (ConnectionPoolException e) {
+			logger.error("ConnectionPoolException!");
+			throw new DAOException("ConnectionPoolException!",e);
+		}
+			
 	}
 
 	@Override
-	public synchronized void banUser(String targetlogin, String signIn) throws DAOException {
+	public void banUser(String targetlogin, String signIn) throws DAOException {
 		ResultSet rs;
 		PreparedStatement ps;
-		ConnectionPool connectionPool = new ConnectionPool();		
-		Connection connection = connectionPool.getConnection();
-		boolean flag = false;		
+		boolean isUserBan = false;		
 		try {
+			ConnectionPool connectionPool = ConnectionPool.getInstance();		
+			Connection connection = connectionPool.getConnection();
+		
 			ps = connection.prepareStatement(GET_USERS);
 			rs = ps.executeQuery();	
 			while(rs.next()){
@@ -315,30 +294,36 @@ public class SQLUserDAO implements UserDAO {
 						logger.warn("User already BAN!");
 						throw new DAOException("User already BAN!");
 					}
-					flag = true;
+					isUserBan = true;
 					ps = connection.prepareStatement(BAN_USER);
 					ps.setString(1, signIn);
 					ps.setString(2,targetlogin);	
 					ps.executeUpdate();								
 				}
 			}	
-			if(!flag){
+			if(!isUserBan){
 				logger.warn("User is absent in db! Please registration!");
 				throw new DAOException("User is absent in db! Please registration!");
 			}		
 			} catch (SQLException e) {
-				logger.error("SQLException!");
+				logger.error("SQLException!", e);
 				throw new DAOException("SQLException!");
-			}finally {
-				try {
-					connection.close();
-				} catch (SQLException e) {
-					logger.error(e + " Can't close connection!");
-					
-				}
+			}catch (ConnectionPoolException e) {
+				logger.error("ConnectionPoolException!");
+				throw new DAOException("ConnectionPoolException!",e);
 			}	
 		}		
-
+	
+	private User setUserParam(User user, ResultSet rs) throws SQLException{			
+			while(rs.next()){
+				user.setUserId(rs.getInt(1));			
+				user.setLogin(rs.getString(2));
+				user.setPassword(rs.getString(3));
+				user.setAccess(rs.getString(4));
+				user.setSignIn(rs.getString(5));	
+			}		
+		return user;		
+	}
 }
 
 	
